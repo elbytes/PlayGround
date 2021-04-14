@@ -1,0 +1,51 @@
+.logo {
+  font-family: 'Balsamiq Sans', cursive;
+  font-family: 'Galindo', cursive;
+  font-family: 'Mitr', sans-serif;
+  font-size: 1.5rem;
+  text-transform: none !important;
+  font-weight: initial;
+}
+
+main {
+  min-height: 80vh;
+}
+
+.text-black {
+  color: black;
+}
+
+.act-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.act-card {
+  width: 200px;
+  height: 200px;
+  background: none;
+  border: none;
+}
+
+.container-full-width {
+  width: 100%;
+}
+
+.light-blue {
+  background-color: #9ac7d9;
+}
+
+.mid-blue {
+  background-color: #034c8c;
+}
+
+.video {
+  width: '500px';
+}
+
+.home {
+  background-color: #fafafa;
+  height: 90%;
+  width: 90%;
+  border-radius: 1rem;
+}
