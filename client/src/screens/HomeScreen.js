@@ -1,52 +1,54 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import ActivityListScreen from './ActivityListScreen'
 import Dashboard from '../components/Dashboard'
 import Contacts from '../components/Contacts'
-import { getUserHome , login} from '../actions/userActions'
-import { useDispatch, useSelector} from 'react-redux'
+import { getUserHome, login } from '../actions/userActions'
+import { useDispatch, useSelector } from 'react-redux'
 import { USER_HOME_FAIL, USER_HOME_SUCCESS } from '../constants/userConstants'
 import SignToRoom from '../components/SignToRoom'
+import TwilioVideoDisplay from '../components/TwilioVideoDisplay'
 
+const HomeScreen = ({ location, history }) => {
+  const [token, setToken] = useState()
 
+  const dispatch = useDispatch()
 
-const HomeScreen = ({location, history}) => {
-    const [token, setToken] = useState()
-    
-    const dispatch = useDispatch()
+  const userHome = useSelector((state) => state.userHome)
+  const { loading, error, user } = userHome
 
-    const userHome = useSelector(state => state.userHome)
-    const { loading, error, user } = userHome
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
-    const userLogin = useSelector(state => state.userLogin)
-    const { userInfo } = userLogin
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    } else {
+      if (user.name) {
+        dispatch({ type: USER_HOME_SUCCESS })
+        dispatch(getUserHome())
+      }
+    }
+  }, [dispatch, history, userInfo, user])
 
-    useEffect(() => {
-        if(!userInfo){
-            history.push('/login')
-        } else{
-            if(user.name){
-                dispatch({type: USER_HOME_SUCCESS})
-                dispatch(getUserHome())
-            }
-        }
-        
-    }, [dispatch, history, userInfo, user])
-
-    return (
-        <>
-            <h1>
-                HomeScreen
-            </h1>
-            <div className='home'>
-            <ActivityListScreen />
-            <Contacts />
+  return (
+    <>
+      <h1>HomeScreen</h1>
+      <div className='home'>
+        <ActivityListScreen />
+        <Contacts />
+        <div>
+          {!token ? (
             <div>
-                {!token ? <div><SignToRoom setToken={setToken}/></div> : <div>Starting a Call... </div>}
+              <SignToRoom setToken={setToken} />
             </div>
-            <hr />
-            </div>
-        </>
-    )
+          ) : (
+            <TwilioVideoDisplay token={token} />
+          )}
+        </div>
+        <hr />
+      </div>
+    </>
+  )
 }
 
 export default HomeScreen
