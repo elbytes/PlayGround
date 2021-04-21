@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import ActivityListScreen from './ActivityListScreen'
 import Dashboard from '../components/Dashboard'
-import Contacts from '../components/Contacts'
 import { getUserHome, login } from '../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { USER_HOME_FAIL, USER_HOME_SUCCESS } from '../constants/userConstants'
-import SignToRoom from '../components/SignToRoom'
-import TwilioVideoDisplay from '../components/TwilioVideoDisplay'
-
+import VideoCallOptions from '../components/VideoCallOptions'
+import { connectWithWebSocket } from '../utils/wsConn/wsConn'
 const HomeScreen = ({ location, history }) => {
-  const [token, setToken] = useState()
-
   const dispatch = useDispatch()
 
   const userHome = useSelector((state) => state.userHome)
@@ -30,22 +26,16 @@ const HomeScreen = ({ location, history }) => {
     }
   }, [dispatch, history, userInfo, user])
 
+  useEffect(() => {
+    connectWithWebSocket()
+  })
+
   return (
     <>
       <h1>HomeScreen</h1>
       <div className='home'>
-        <ActivityListScreen />
-        <Contacts />
-        <div>
-          {!token ? (
-            <div>
-              <SignToRoom setToken={setToken} />
-            </div>
-          ) : (
-            <TwilioVideoDisplay token={token} />
-          )}
-        </div>
         <hr />
+        <VideoCallOptions id={userInfo._id} />
       </div>
     </>
   )
