@@ -59,7 +59,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT })
 }
 
-export const register = (name, email, username, password) => async (
+export const register = (name, username, email, password) => async (
   dispatch
 ) => {
   try {
@@ -73,7 +73,7 @@ export const register = (name, email, username, password) => async (
 
     const { data } = await axios.post(
       '/api/users',
-      { name, email, username, password },
+      { name, username, email, password },
       config
     )
 
@@ -131,13 +131,24 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 }
 
-export const findUser = (username) => async (dispatch, getState) => {
+export const getFindUser = (username) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_FIND_REQUEST })
+    const {
+      userFound: { userInfo },
+    } = getState()
+
     const config = {
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
     }
-    const { data } = await axios.get(`/api/users/search/`, { username }, config)
+
+    const { data } = await axios.get(
+      `/api/users/search/?keyword=${username}`,
+      config
+    )
 
     dispatch({
       type: USER_FIND_SUCCESS,

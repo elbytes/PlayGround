@@ -1,7 +1,9 @@
+import bodyParser from 'body-parser'
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
 import generateUniqueId from '../utils/generateUniqueId.js'
+
 //@desc AUTH user and get token
 //@route POST /api/users/login
 //@access public
@@ -40,8 +42,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
 //@route GET /api/users/search
 //@access private
 const findUser = asyncHandler(async (req, res) => {
-  const { username } = req.body
-  console.log('trying to search db')
+  // const username = req.query.username
+  console.log(req.params.keyword)
+  console.log('Searching the database')
   const user = await User.findOne({ username })
   if (user) {
     res.json({ username: username })

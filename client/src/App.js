@@ -10,7 +10,7 @@ import ActivityScreen from './screens/ActivityScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import ProfileScreen from './screens/ProfileScreen'
-import ContactSearch from './components/ContactSearch'
+
 const App = () => {
   return (
     <Router>
@@ -25,6 +25,7 @@ const App = () => {
             <Route path='/login' component={LoginScreen} />
             <Route path='/register' component={RegisterScreen} />
             <Route path='/profile' component={ProfileScreen} />
+            <Route path='/search:keyword' component={HomeScreen} exact />
           </Switch>
         </Container>
       </main>

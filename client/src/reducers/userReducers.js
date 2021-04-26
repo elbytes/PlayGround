@@ -2,6 +2,9 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  USER_FIND_FAIL,
+  USER_FIND_REQUEST,
+  USER_FIND_SUCCESS,
   USER_HOME_FAIL,
   USER_HOME_REQUEST,
   USER_HOME_SUCCESS,
@@ -16,9 +19,6 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_RESET,
   USER_UPDATE_PROFILE_SUCCESS,
-  USER_FIND_REQUEST,
-  USER_FIND_SUCCESS,
-  USER_FIND_FAIL,
 } from '../constants/userConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -90,14 +90,15 @@ export const userUpdateProfileReducer = (state = {}, action) => {
   }
 }
 
-export const userFindUserReducer = (state = {}, action) => {
+export const userFindReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_FIND_REQUEST:
       return { Loading: true }
     case USER_FIND_SUCCESS:
-      return { Loading: false, userInfo: action.payload }
+      return { Loading: false, success: true, userInfo: action.payload }
     case USER_FIND_FAIL:
       return { Loading: false, error: action.payload }
+
     default:
       return state
   }

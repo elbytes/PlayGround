@@ -1,16 +1,13 @@
 import React from 'react'
-import { Nav } from 'react-bootstrap'
+import VideoCallDashboard from './VideoCallDashboard'
 
 const Dashboard = () => {
-    return (
-        <>
-           <Nav defaultActiveKey="/home" className="flex-column">
-                <Nav.Link href="/home">Active</Nav.Link>
-                <Nav.Link eventKey="link-1">Link</Nav.Link>
-                <Nav.Link eventKey="link-2">Link</Nav.Link>
-                </Nav> 
-        </>
-    )
+  return (
+    <>
+      <h2>Dashboard Componenet</h2>
+      <VideoCallDashboard />
+    </>
+  )
 }
 
 export default Dashboard

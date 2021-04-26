@@ -8,8 +8,9 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
   userHomeReducer,
-  userFindUserReducer,
+  userFindReducer,
 } from './reducers/userReducers'
+import { callReducer } from './reducers/callReducer'
 
 const reducer = combineReducers({
   activityList: activityListReducer,
@@ -18,7 +19,8 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
   userHome: userHomeReducer,
-  findUser: userFindUserReducer,
+  userFind: userFindReducer,
+  call: callReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
