@@ -57,10 +57,31 @@ main {
   height: 90%;
   width: 90%;
   border-radius: 1rem;
+  min-height: 70vh;
+  padding: 1rem;
 }
 
 .login-card {
   display: flex;
   width: 100%;
   min-height: 100%;
+}
+
+.border {
+  border: #034c8c;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.menu-icon {
+  width: 2rem;
+  height: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 0;
+  position: relative;
+}
+
+.menu-icon:hover {
+  cursor: pointer;
 }

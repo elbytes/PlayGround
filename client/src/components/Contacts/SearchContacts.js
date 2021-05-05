@@ -17,8 +17,11 @@ const SearchContacts = (props) => {
     props.onUserFound()
   }
 
+  const startVideoCallScreenHandler = (e) => {
+    console.log('starting call...')
+  }
   return (
-    <>
+    <div className='border'>
       <h3>SearchContacts Componenet</h3>
       <h4>Find a Contact to Start the Call</h4>
       <Form onSubmit={submitHandler} inline>
@@ -33,7 +36,17 @@ const SearchContacts = (props) => {
           Find
         </Button>
       </Form>
-    </>
+      <div>
+        <p>user found</p>
+        <button
+          type='submit'
+          className='btn btn-success'
+          onClick={startVideoCallScreenHandler}
+        >
+          Call
+        </button>
+      </div>
+    </div>
   )
 }
 

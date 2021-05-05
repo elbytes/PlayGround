@@ -1,12 +1,15 @@
 import React from 'react'
-
+import DirectCall from './DirectCall'
+import { Row, Col } from 'react-bootstrap'
 const VideoCallDisplay = () => {
   return (
     <div>
       <p>VideoCallDisplay</p>
-      <div>
-        <video id='client' autoplay></video>
-      </div>
+      <Row>
+        <Col>
+          <DirectCall />
+        </Col>
+      </Row>
     </div>
   )
 }

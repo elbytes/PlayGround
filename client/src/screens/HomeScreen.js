@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { USER_HOME_FAIL, USER_HOME_SUCCESS } from '../constants/userConstants'
 import { connectWithWebSocket } from '../utils/wsConn/wsConn'
 import Contacts from '../components/Contacts/Contacts'
-import SearchContacts from '../components/Contacts/SearchContacts'
+import ActivityListScreen from '../screens/ActivityListScreen'
 import Dashboard from '../components/Dashboard'
 const HomeScreen = ({ location, history }) => {
   const dispatch = useDispatch()
@@ -13,7 +13,7 @@ const HomeScreen = ({ location, history }) => {
   const { loading, error, user } = userHome
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-  const [foundContact, setfoundContact] = useState(false)
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login')
@@ -25,11 +25,6 @@ const HomeScreen = ({ location, history }) => {
     }
   }, [dispatch, history, userInfo, user])
 
-  const onUserFoundHandler = (didFoundUSer) => {
-    //pretending we find a contac from db
-    setfoundContact(true)
-  }
-
   useEffect(() => {
     connectWithWebSocket()
   }, [])
@@ -38,11 +33,12 @@ const HomeScreen = ({ location, history }) => {
     <>
       <h1>HomeScreen</h1>
       <div className='home'>
-        {!foundContact ? (
-          <SearchContacts onUserFound={onUserFoundHandler} />
-        ) : (
-          <Dashboard />
-        )}
+        <h2>Welcome {userInfo.name}</h2>
+        <Contacts />
+      </div>
+      <hr />
+      <div className='home'>
+        <Dashboard />
       </div>
     </>
   )
