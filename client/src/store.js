@@ -10,6 +10,7 @@ import {
   userHomeReducer,
   userFindReducer,
 } from './reducers/userReducers'
+import dashboardReducer from './reducers/dashboardReducer'
 import { callReducer } from './reducers/callReducer'
 
 const reducer = combineReducers({
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   userHome: userHomeReducer,
   userFind: userFindReducer,
   call: callReducer,
+  dashboard: dashboardReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

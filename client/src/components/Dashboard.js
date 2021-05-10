@@ -16,7 +16,7 @@ const Dashboard = () => {
   }
   return (
     <>
-      <h2>Dashboard Componenet</h2>
+      <h2>Dashboard Component</h2>
       <div className='float-right'>
         <VideoCallDashboard />
         {activityListOpenStatus ? <ActivityListScreen /> : null}

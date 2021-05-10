@@ -10,6 +10,7 @@ import ActivityScreen from './screens/ActivityScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import VideoCallDashboard from './components/Videocall/VideoCallDashboard'
 const App = () => {
   return (
     <Router>
@@ -21,6 +22,7 @@ const App = () => {
             <Route path='/activity/:name' component={ActivityScreen} />
             <Route path='/activity' component={ActivityListScreen} exact />
             <Route path='/home' component={HomeScreen} />
+            <Route path='/dashboard' component={VideoCallDashboard} exact />
             <Route path='/login' component={LoginScreen} />
             <Route path='/register' component={RegisterScreen} />
             <Route path='/profile' component={ProfileScreen} />

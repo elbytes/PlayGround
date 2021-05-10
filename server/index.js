@@ -41,19 +41,54 @@ const io = new Server(httpServer, {
   },
 })
 
-let peers = ['']
+let peers = []
+const broadcastEventTypes = {
+  ACTIVE_USERS: 'ACTIVE_USERS',
+}
 io.on('connection', (socket) => {
   socket.emit('connection', null)
   console.log('New user connected')
   console.log(socket.id)
 
+  //when a user sets nickname for videocall
   socket.on('register-new-user', (data) => {
     peers.push({
       username: data.username,
-      socket: data.socketId,
+      socketId: data.socketId,
     })
     console.log('registered new user')
     console.log(peers)
+
+    io.sockets.emit('broadcast', {
+      event: broadcastEventTypes.ACTIVE_USERS,
+      activeUsers: peers,
+    })
+  })
+
+  socket.on('disconnect', () => {
+    console.log('user disconnect')
+    peers = peers.filter((peer) => peer.socketId !== socket.id)
+    io.sockets.emit('broadcast', {
+      event: broadcastEventTypes.ACTIVE_USERS,
+      activeUsers: peers,
+    })
+  })
+
+  //listeners for direct call
+  socket.on('pre-offer', (data) => {
+    console.log('pre-offer handled')
+    io.to(data.callee.socketId).emit('pre-offer', {
+      callerUsername: data.caller.username,
+      callerSocketId: socket.id,
+    })
+  })
+
+  socket.on('pre-offer-answer', (data) => {
+    console.log('handling pre offer answer')
+    io.to(data.callerSocketId).emit('pre-offer-answer', {
+      answer: data.answer,
+    })
   })
 })
+
 httpServer.listen(PORT)

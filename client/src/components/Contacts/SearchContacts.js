@@ -7,14 +7,14 @@ const SearchContacts = (props) => {
   const [keyword, setkeyword] = useState('')
   const dispatch = useDispatch()
   const userFound = useSelector((state) => state.userFound)
-
+  console.log(userFound)
   const inputChangeHandler = (e) => {
     setkeyword(e.target.value)
   }
 
   const submitHandler = (e) => {
     e.preventDefault()
-    props.onUserFound()
+    dispatch(getFindUser(keyword))
   }
 
   const startVideoCallScreenHandler = (e) => {

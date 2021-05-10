@@ -12,7 +12,8 @@
 }
 
 .active_user_list_item:hover {
-  background-color: #8a85ff;
+  background-color: #034c8c;
+  color: #fff;
 }
 
 .active_user_list_image_container {

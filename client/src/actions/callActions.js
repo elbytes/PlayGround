@@ -1,6 +1,9 @@
 import {
   CALL_SET_CALL_STATE,
   CALL_SET_LOCAL_STREAM,
+  CALL_SET_CALLING_DIALOGUE_VISIBLE,
+  CALL_SET_CALLER_USERNAME,
+  CALL_SET_CALL_REJECTED,
 } from '../constants/callConstants'
 import callStates from '../constants/callConstants'
 
@@ -15,5 +18,29 @@ export const setCallState = (callState) => {
   return {
     type: CALL_SET_CALL_STATE,
     callState,
+  }
+}
+
+export const setCallingDialogueVisibile = (visible) => {
+  return {
+    type: CALL_SET_CALLING_DIALOGUE_VISIBLE,
+    visible,
+  }
+}
+
+export const setCallerUsername = (callerUsername) => {
+  return {
+    type: CALL_SET_CALLER_USERNAME,
+    callerUsername,
+  }
+}
+
+export const setCallRejected = (callRejectedDetails) => {
+  return {
+    type: CALL_SET_CALL_REJECTED,
+    callRejected: {
+      rejected: callRejectedDetails.rejected,
+      reason: callRejectedDetails.reason,
+    },
   }
 }

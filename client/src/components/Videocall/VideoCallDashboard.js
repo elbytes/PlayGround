@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 import { io } from 'socket.io-client'
 import * as webRTCHandler from '../../utils/webRTC/webRTCHandler'
 import VideoCallDisplay from './VideoCallDisplay'
+import NicknameLogin from './NicknameLogin'
 import ActiveUsersList from '../ActiveUsersList/ActiveUsersList'
 const VideoCallDashboard = ({ id }) => {
   useEffect(() => {
@@ -10,22 +11,21 @@ const VideoCallDashboard = ({ id }) => {
     return () => {}
   }, [])
 
-  const [username, setUsername] = useState()
-
   return (
-    <div className='border'>
-      <h3>VideoCallDashboard</h3>
-      <p>user: {id}</p>
+    <div className='home'>
       <div className='border'>
-        <VideoCallDisplay />
-      </div>
-      {/* <div>
-        <div>content</div>
-        <div>rooms</div>
-        <div>
-          users <ActiveUsersList />
+        <h3>VideoCallDashboard</h3>
+        <div className='border'>
+          <VideoCallDisplay />
         </div>
-      </div> */}
+        <div>
+          <div>content</div>
+          <div>rooms</div>
+          <div>
+            users <ActiveUsersList />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

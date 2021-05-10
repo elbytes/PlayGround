@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Route } from 'react-router-dom'
 import SearchContacts from './SearchContacts'
 import Dashboard from '../Dashboard'
-
+import ActiveUsersList from '../ActiveUsersList/ActiveUsersList'
 const Contacts = () => {
   const [foundContact, setfoundContact] = useState(false)
   const onUserFoundHandler = (didFoundUSer) => {

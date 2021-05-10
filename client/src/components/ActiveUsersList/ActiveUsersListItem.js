@@ -1,7 +1,12 @@
 import React from 'react'
 import userAvatar from '../../images/userAvatar.png'
-const ActiveUsersListItem = ({ activeUser }) => {
-  const handleContactItemClicked = () => {}
+import { callToOtherUser } from '../../utils/webRTC/webRTCHandler'
+
+const ActiveUsersListItem = (props) => {
+  const { activeUser } = props
+  const handleContactItemClicked = () => {
+    callToOtherUser(activeUser)
+  }
   return (
     <div className='active_user_list_item' onClick={handleContactItemClicked}>
       <div className='active_user_list_image_container'>

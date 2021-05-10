@@ -18,6 +18,5 @@ router
   .put(protect, updateUserProfile)
 router.route('/home').get(protect, getUserHome)
 router.post('/search', findUser)
-router.get('/search:username', findUser)
 
 export default router

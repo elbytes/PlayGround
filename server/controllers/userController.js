@@ -39,15 +39,15 @@ const getUserProfile = asyncHandler(async (req, res) => {
 })
 
 //@desc Get user
-//@route GET /api/users/search
+//@route POST /api/users/search
 //@access private
 const findUser = asyncHandler(async (req, res) => {
-  // const username = req.query.username
-  console.log(req.params.keyword)
+  const username = req.body.username
+  console.log(req.body.username)
   console.log('Searching the database')
   const user = await User.findOne({ username })
   if (user) {
-    res.json({ username: username })
+    res.json({ username: user.username })
   } else {
     res.status(404)
     throw new Error('User not found')

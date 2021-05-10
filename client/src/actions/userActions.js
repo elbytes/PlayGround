@@ -134,6 +134,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 export const getFindUser = (username) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_FIND_REQUEST })
+
     const {
       userFound: { userInfo },
     } = getState()
@@ -145,15 +146,13 @@ export const getFindUser = (username) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(
-      `/api/users/search/?keyword=${username}`,
-      config
-    )
+    const { data } = await axios.post('/search', { username }, config)
 
     dispatch({
       type: USER_FIND_SUCCESS,
       payload: data,
     })
+    console.log(data)
   } catch (error) {
     dispatch({
       type: USER_FIND_FAIL,
