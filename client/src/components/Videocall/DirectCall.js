@@ -6,7 +6,13 @@ import CallRejected from '../CallRejected/CallRejected'
 import IncomingCallDialogue from '../IncomingCallDialogue/IncomingCallDialogue'
 import CallingDialogue from '../CallingDialogue/CallingDialogue'
 import { callStates } from '../../constants/callConstants'
-import { setCallRejected } from '../../actions/callActions'
+import {
+  setCallRejected,
+  setLocalCamEnabled,
+  setLocalMicEnabled,
+} from '../../actions/callActions'
+import ConversationBtns from '../Videocall/ConversationBtns/ConversationBtns'
+
 const DirectCall = (props) => {
   const {
     localStream,
@@ -20,7 +26,9 @@ const DirectCall = (props) => {
   return (
     <>
       <LocalVideoView localStream={localStream} />
-      {remoteStream && <RemoteVideoView remoteStream={remoteStream} />}
+      {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
+        <RemoteVideoView remoteStream={remoteStream} />
+      )}
       {callRejected.rejected && (
         <CallRejected
           reason={callRejected.reason}
@@ -31,6 +39,9 @@ const DirectCall = (props) => {
         <IncomingCallDialogue callerUsername={callerUsername} />
       )}
       {callingDialogueVisibile && <CallingDialogue />}
+      {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
+        <ConversationBtns {...props} />
+      )}
     </>
   )
 }
@@ -39,6 +50,8 @@ function mapDispatchToProps(dispatch) {
   return {
     hideCallRejectedDialog: (callRejectedDetails) =>
       dispatch(setCallRejected(callRejectedDetails)),
+    setCamEnabled: (enabled) => dispatch(setLocalCamEnabled(enabled)),
+    setMicEnabled: (enabled) => dispatch(setLocalMicEnabled(enabled)),
   }
 }
 function mapStoreStateToProps({ call }) {

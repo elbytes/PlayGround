@@ -9,6 +9,7 @@ import userRoutes from './routes/userRoutes.js'
 import { errorHandler } from './middlewares/errorMiddleware.js'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
+import Pubnub from 'pubnub'
 
 dotenv.config()
 connectDB()
@@ -88,6 +89,32 @@ io.on('connection', (socket) => {
     io.to(data.callerSocketId).emit('pre-offer-answer', {
       answer: data.answer,
     })
+  })
+
+  socket.on('webRTC-offer', (data) => {
+    console.log('handling webRTC offer')
+    io.to(data.calleeSocketId).emit('webRTC-offer', {
+      offer: data.offer,
+    })
+  })
+
+  socket.on('webRTC-answer', (data) => {
+    console.log('handling webRTC answer')
+    io.to(data.callerSocketId).emit('webRTC-answer', {
+      answer: data.answer,
+    })
+  })
+
+  socket.on('webRTC-candidate', (data) => {
+    console.log('handling ice candidate')
+    io.to(data.connectedUserSocketId).emit('webRTC-candidate', {
+      candidate: data.candidate,
+    })
+  })
+
+  socket.on('user-hanged-up', (data) => {
+    console.log('handling user-hanged-up')
+    io.to(data.connectedUserSocketId).emit('user-hanged-up')
   })
 })
 

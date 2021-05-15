@@ -1,5 +1,5 @@
 import React, { useRef, useState, useHistory, useEffect } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import { io } from 'socket.io-client'
 import * as webRTCHandler from '../../utils/webRTC/webRTCHandler'
 import VideoCallDisplay from './VideoCallDisplay'
@@ -14,10 +14,24 @@ const VideoCallDashboard = ({ id }) => {
   return (
     <div className='home'>
       <div className='border'>
-        <h3>VideoCallDashboard</h3>
-        <div className='border'>
-          <VideoCallDisplay />
-        </div>
+        <Row>
+          <Col>
+            {' '}
+            <h3>VideoCallDashboard</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div className='border'></div>
+          </Col>
+          <Col>
+            {' '}
+            <div className='border'>
+              <VideoCallDisplay />
+            </div>
+          </Col>
+        </Row>
+
         <div>
           <div>content</div>
           <div>rooms</div>
