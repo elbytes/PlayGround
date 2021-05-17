@@ -46,10 +46,16 @@ let peers = []
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
 }
+
 io.on('connection', (socket) => {
   socket.emit('connection', null)
   console.log('New user connected')
   console.log(socket.id)
+
+  //test listeners
+  // socket.on('click', (data) => {
+  //   console.log('Got event from client: ' + data)
+  // })
 
   //when a user sets nickname for videocall
   socket.on('register-new-user', (data) => {
@@ -92,7 +98,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('webRTC-offer', (data) => {
-    console.log('handling webRTC offer')
+    console.log('handling webRTC offer in server')
     io.to(data.calleeSocketId).emit('webRTC-offer', {
       offer: data.offer,
     })
@@ -115,6 +121,22 @@ io.on('connection', (socket) => {
   socket.on('user-hanged-up', (data) => {
     console.log('handling user-hanged-up')
     io.to(data.connectedUserSocketId).emit('user-hanged-up')
+  })
+
+  //listen to draw happening event from clinet
+  socket.on('draw', (data) => {
+    console.log('handling draw on server')
+    console.log(data)
+    //send draw data to other client
+    socket.to(data.connectedUserSocketId).emit('draw', data)
+    console.log('connectedUserSocketId', data.connectedUserSocketId)
+  })
+
+  //listeners for chess
+  socket.on('move', (data) => {
+    socket.broadcast.emit('move', data)
+    // io.to(data.connectedUserSocketId).emit('move', data)
+    console.log('the data received from chess clinet', data)
   })
 })
 

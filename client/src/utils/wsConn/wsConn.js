@@ -2,7 +2,7 @@ import socketClient from 'socket.io-client'
 import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
-
+import { receiveMove } from '../../components/Chess/ChessGame'
 const SERVER = 'http://localhost:5000'
 
 const broadcastEventTypes = {
@@ -43,9 +43,20 @@ export const connectWithWebSocket = () => {
     console.log('handling webRTC-answer in wss')
   })
 
+  socket.on('webRTC-candidate', (data) => {
+    webRTCHandler.handleCandidate(data)
+    console.log('handling webRTC-candidate in wss')
+  })
+
   socket.on('user-hanged-up', (data) => {
     webRTCHandler.handleUserHangedUp(data)
     console.log('handling user-hanged-up in wss')
+  })
+
+  //listeners for chess
+  socket.on('move', (data) => {
+    console.log('received data back from server', data)
+    receiveMove(data)
   })
 }
 
@@ -99,4 +110,16 @@ const handleBroadcastEvents = (data) => {
     default:
       break
   }
+}
+
+//emitting test event to server
+// export const clickCheck = (data) => {
+//   socket.emit('click', 'hello world from client' + data)
+//   console.log('emitting click check')
+// }
+
+//emitting events to server for chessboard
+export const sendMove = (move) => {
+  socket.emit('move', move)
+  console.log('emitting move event')
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Row, Col } from 'react-bootstrap'
 import LocalVideoView from './LocalVideoView'
 import RemoteVideoView from './RemoteVideoView'
 import CallRejected from '../CallRejected/CallRejected'
@@ -10,8 +11,10 @@ import {
   setCallRejected,
   setLocalCamEnabled,
   setLocalMicEnabled,
+  setMessage,
 } from '../../actions/callActions'
 import ConversationBtns from '../Videocall/ConversationBtns/ConversationBtns'
+import Chat from '../Chat/Chat'
 
 const DirectCall = (props) => {
   const {
@@ -22,26 +25,60 @@ const DirectCall = (props) => {
     callingDialogueVisibile,
     callRejected,
     hideCallRejectedDialog,
+    message,
+    setDirectCallMessage,
   } = props
   return (
     <>
-      <LocalVideoView localStream={localStream} />
-      {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
-        <RemoteVideoView remoteStream={remoteStream} />
-      )}
-      {callRejected.rejected && (
-        <CallRejected
-          reason={callRejected.reason}
-          hideCallRejectedDialog={hideCallRejectedDialog}
-        />
-      )}
-      {callState === callStates.CALL_REQUESTED && (
-        <IncomingCallDialogue callerUsername={callerUsername} />
-      )}
-      {callingDialogueVisibile && <CallingDialogue />}
-      {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
-        <ConversationBtns {...props} />
-      )}
+      <Row>
+        <Col>
+          <LocalVideoView localStream={localStream} />
+        </Col>
+        <Col>
+          {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
+            <RemoteVideoView remoteStream={remoteStream} />
+          )}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {callRejected.rejected && (
+            <CallRejected
+              reason={callRejected.reason}
+              hideCallRejectedDialog={hideCallRejectedDialog}
+            />
+          )}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {callState === callStates.CALL_REQUESTED && (
+            <IncomingCallDialogue callerUsername={callerUsername} />
+          )}
+        </Col>
+      </Row>
+      <Row>
+        <Col>{callingDialogueVisibile && <CallingDialogue />}</Col>
+      </Row>
+      <Row>
+        <Col>
+          {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
+            <ConversationBtns {...props} />
+          )}
+        </Col>
+      </Row>
+      {/* <Row>
+        <Col>
+          <Chat setDirectCallMessage={setDirectCallMessage} message={message} />
+          {remoteStream &&
+            callState === callState.CALL_IN_PROGRESS && <span>chat</span> && (
+              <Chat
+                setDirectCallMessage={setDirectCallMessage}
+                message={message}
+              />
+            )}
+        </Col>
+      </Row> */}
     </>
   )
 }
@@ -52,6 +89,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(setCallRejected(callRejectedDetails)),
     setCamEnabled: (enabled) => dispatch(setLocalCamEnabled(enabled)),
     setMicEnabled: (enabled) => dispatch(setLocalMicEnabled(enabled)),
+    setDirectCallMessage: (received, content) =>
+      dispatch(setMessage(received, content)),
   }
 }
 function mapStoreStateToProps({ call }) {

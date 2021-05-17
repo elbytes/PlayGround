@@ -1,0 +1,1 @@
+export const CANVAS_SET_DRAW = 'CANVAS_SET_DRAW'

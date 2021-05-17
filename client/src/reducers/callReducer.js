@@ -12,6 +12,11 @@ const initState = {
   remoteStream: null,
   localCamEnabled: true,
   localMicEnabled: true,
+  message: {
+    received: false,
+    content: '',
+  },
+  activity: 'draw',
 }
 
 export const callReducer = (state = initState, action) => {
@@ -32,6 +37,12 @@ export const callReducer = (state = initState, action) => {
       return { ...state, localCamEnabled: action.enabled }
     case callActions.CALL_SET_LOCAL_MIC_ENABLED:
       return { ...state, localMicEnabled: action.enabled }
+    case callActions.CALL_SET_CHAT_MESSAGE: {
+      return { ...state, message: action.message }
+    }
+    case callActions.CALL_SET_ACTIVITY: {
+      return { ...state, activity: action.activity }
+    }
     default:
       return state
   }

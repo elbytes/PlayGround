@@ -2,14 +2,14 @@ import React, { useRef, useEffect } from 'react'
 
 const styles = {
   videoContainer: {
-    width: '180px',
-    height: '180px',
+    width: '100%',
+    height: '100%',
     position: 'relative',
   },
   videoElement: {
     width: '100%',
     height: '100%',
-    borderRadius: '30px',
+    borderRadius: '8px',
   },
 }
 const LocalVideoView = (props) => {

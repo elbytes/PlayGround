@@ -3,6 +3,8 @@ import {
   setCallState,
   setCallRejected,
   setRemoteStream,
+  setMessage,
+  setDrawData,
 } from '../../actions/callActions'
 import { callStates } from '../../constants/callConstants'
 import {
@@ -28,7 +30,7 @@ const configuration = {
 }
 let connectedUserSocketId
 let peerConnection
-
+let dataChannel
 export const getLocalStream = () => {
   navigator.mediaDevices
     .getUserMedia(defaultConstrains)
@@ -53,6 +55,7 @@ const createPeerConnection = () => {
 
   for (const track of localStream.getTracks()) {
     peerConnection.addTrack(track, localStream)
+    console.log('adding localStream track to peerConnection')
   }
 
   peerConnection.ontrack = ({ streams: [stream] }) => {
@@ -68,13 +71,16 @@ const createPeerConnection = () => {
       console.log('peer connection is ready to receive data channel messages')
     }
 
-    dataChannel.onmessage = (event) => {}
+    dataChannel.onmessage = (event) => {
+      store.dispatch(setMessage({ received: true, content: event.data }))
+    }
   }
 
-  // dataChannel = peerConnection.createDataChannel('chat')
-  // dataChannel.onopen = () => {
-  //   console.log('data channel successfully opened')
-  // }
+  //outgoing data channel messages
+  dataChannel = peerConnection.createDataChannel('chat')
+  dataChannel.onopen = () => {
+    console.log('chat data channel successfully opened')
+  }
 
   peerConnection.onicecandidate = (event) => {
     //send ice candidate to other user
@@ -84,6 +90,7 @@ const createPeerConnection = () => {
         candidate: event.candidate,
         connectedUserSocketId: connectedUserSocketId,
       })
+      console.log('sending candidates to user')
     }
   }
   peerConnection.onconnectionstatechange = (event) => {
@@ -124,6 +131,7 @@ export const acceptIncomingCall = () => {
     answer: preOfferAnswers.CALL_ACCEPTED,
   })
   store.dispatch(setCallState(callStates.CALL_IN_PROGRESS))
+  console.log('accept incoming call from webRTC handler')
 }
 
 export const rejectIncomingCall = () => {
@@ -166,7 +174,6 @@ const sendOffer = async () => {
 }
 
 export const handleOffer = async (data) => {
-  console.log('data in handle offer:' + data)
   await peerConnection.setRemoteDescription(data.offer)
   const answer = await peerConnection.createAnswer()
   await peerConnection.setLocalDescription(answer)
@@ -182,8 +189,8 @@ export const handleAnswer = async (data) => {
 
 export const handleCandidate = async (data) => {
   try {
-    console.log('adding ice candidate')
     await peerConnection.addIceCandidate(data.candidate)
+    console.log('adding ice candidate')
   } catch (error) {
     console.log('Error occured when trying to add received candidate', error)
   }
@@ -223,4 +230,8 @@ const resetCallDataAfterHangUp = () => {
 export const resetCallData = () => {
   connectedUserSocketId = null
   store.dispatch(setCallState(callStates.CALL_AVAILABLE))
+}
+
+export const sendMessageUsingDataChannel = (message) => {
+  dataChannel.send(message)
 }

@@ -2,16 +2,15 @@ import React, { useRef, useEffect } from 'react'
 
 const styles = {
   videoContainer: {
-    width: '50%',
-    height: '150%',
-    // borderRadius: '8px',
-    // position: 'relative',
-    // top: '5%',
-    // right: '23%',
+    width: '100%',
+    height: '100%',
+    position: 'relative',
+    right: '2%',
   },
   videoElement: {
     width: '100%',
     height: '100%',
+    borderRadius: '8px',
   },
 }
 const RemoteVideoView = (props) => {
@@ -30,8 +29,12 @@ const RemoteVideoView = (props) => {
   }, [remoteStream])
   return (
     <div style={styles.videoContainer}>
-      <span>Remote video view</span>
-      <video style={styles.videoElement} ref={remoteVideoRef} autoPlay />
+      <video
+        controls
+        style={styles.videoElement}
+        ref={remoteVideoRef}
+        autoPlay
+      />
     </div>
   )
 }

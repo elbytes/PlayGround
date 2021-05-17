@@ -12,6 +12,7 @@ import {
 } from './reducers/userReducers'
 import dashboardReducer from './reducers/dashboardReducer'
 import { callReducer } from './reducers/callReducer'
+import { canvasReducer } from './reducers/canvasReducer'
 
 const reducer = combineReducers({
   activityList: activityListReducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   userFind: userFindReducer,
   call: callReducer,
   dashboard: dashboardReducer,
+  canvas: canvasReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
