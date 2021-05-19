@@ -7,7 +7,7 @@ import carFour from '../images/006.jpeg'
 const LandingScreen = () => {
   return (
     <>
-      <h1>Landing page screen</h1>
+      <h1>Welcome to PlayGround!</h1>
 
       <Carousel>
         <Carousel.Item interval={3000}>

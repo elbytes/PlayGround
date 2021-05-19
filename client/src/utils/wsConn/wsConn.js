@@ -56,7 +56,7 @@ export const connectWithWebSocket = () => {
   //listeners for chess
   socket.on('move', (data) => {
     console.log('received data back from server', data)
-    receiveMove(data)
+    webRTCHandler.sendReceivedChessMoveToBoard(data) //to store
   })
 }
 
@@ -122,4 +122,5 @@ const handleBroadcastEvents = (data) => {
 export const sendMove = (move) => {
   socket.emit('move', move)
   console.log('emitting move event')
+  webRTCHandler.sendReceivedChessMoveToBoard(move) //to store
 }

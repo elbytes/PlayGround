@@ -13,6 +13,7 @@ import {
 } from '../constants/callConstants'
 import callStates from '../constants/callConstants'
 
+//call action creators
 export const setLocalStream = (localStream) => {
   return {
     type: CALL_SET_LOCAL_STREAM,
@@ -72,6 +73,7 @@ export const setLocalCamEnabled = (enabled) => {
   }
 }
 
+//chat action creator
 export const setMessage = (messageReceived, messageContent) => {
   return {
     type: CALL_SET_CHAT_MESSAGE,
@@ -82,6 +84,7 @@ export const setMessage = (messageReceived, messageContent) => {
   }
 }
 
+//setting chosen activity
 export const setActivity = (activity) => {
   return {
     type: CALL_SET_ACTIVITY,
@@ -89,6 +92,7 @@ export const setActivity = (activity) => {
   }
 }
 
+//canvas action creator
 export const setDrawData = (drawDataReceived, drawData) => {
   return {
     type: CALL_SET_DRAW_DATA,

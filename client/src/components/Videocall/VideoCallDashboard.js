@@ -9,7 +9,8 @@ import ActiveUsersList from '../ActiveUsersList/ActiveUsersList'
 import CanvasIndex from '../Canvas/CanvasIndex'
 import ChessIndex from '../Chess/ChessIndex'
 import ActivityListScreen from '../../screens/ActivityListScreen'
-
+import Chat from '../Chat/Chat'
+import { callStates } from '../../constants/callConstants'
 const styles = {
   menu: {
     cursor: 'pointer',
@@ -33,6 +34,7 @@ const VideoCallDashboard = ({ id }) => {
   const logging = () => {
     console.log('log')
   }
+
   return (
     <div className='home'>
       <div className='border'>
@@ -54,14 +56,16 @@ const VideoCallDashboard = ({ id }) => {
             </div>
           </Col>
           <Col>
-            <div className='border'>
-              <VideoCallDisplay />
-            </div>
+            <Row>
+              <Col>
+                <div className='border'>
+                  <VideoCallDisplay />
+                </div>
+              </Col>
+            </Row>
           </Col>
         </Row>
-        <Row>
-          <Col></Col>
-        </Row>
+        <Row></Row>
         <div>
           <div>
             Active Users: <ActiveUsersList />

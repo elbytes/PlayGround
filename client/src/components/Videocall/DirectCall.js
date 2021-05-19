@@ -13,6 +13,7 @@ import {
   setLocalMicEnabled,
   setMessage,
 } from '../../actions/callActions'
+import { setReceivedMoved } from '../../actions/chessActions'
 import ConversationBtns from '../Videocall/ConversationBtns/ConversationBtns'
 import Chat from '../Chat/Chat'
 
@@ -27,6 +28,7 @@ const DirectCall = (props) => {
     hideCallRejectedDialog,
     message,
     setDirectCallMessage,
+    setReceivedMoved,
   } = props
   return (
     <>
@@ -67,18 +69,11 @@ const DirectCall = (props) => {
           )}
         </Col>
       </Row>
-      {/* <Row>
+      <Row>
         <Col>
           <Chat setDirectCallMessage={setDirectCallMessage} message={message} />
-          {remoteStream &&
-            callState === callState.CALL_IN_PROGRESS && <span>chat</span> && (
-              <Chat
-                setDirectCallMessage={setDirectCallMessage}
-                message={message}
-              />
-            )}
         </Col>
-      </Row> */}
+      </Row>
     </>
   )
 }
@@ -91,6 +86,7 @@ function mapDispatchToProps(dispatch) {
     setMicEnabled: (enabled) => dispatch(setLocalMicEnabled(enabled)),
     setDirectCallMessage: (received, content) =>
       dispatch(setMessage(received, content)),
+    setReceivedMoved: (move) => dispatch(setReceivedMoved(move)),
   }
 }
 function mapStoreStateToProps({ call }) {

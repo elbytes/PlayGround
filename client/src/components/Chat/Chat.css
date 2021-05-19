@@ -1,5 +1,6 @@
-
-input:focus, textarea:focus, select:focus{
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
 }
 
@@ -8,8 +9,8 @@ input:focus, textarea:focus, select:focus{
   width: 170px;
   padding: 0 5px;
   border: 1px solid #e6e5e8;
-  background-color: #282C34;
-  border-style:inset;
+  background-color: #282c34;
+  border-style: inset;
   position: absolute;
   margin: 0;
   right: 21%;
@@ -19,22 +20,29 @@ input:focus, textarea:focus, select:focus{
   border-radius: 50px;
 }
 
-.message_displayer {
-  min-width: 50px;
-  min-height: 40px;
-  max-width: 195px;
-  padding: 10px 30px;
-  border: 1px solid #e6e5e8;
-  background-color: #282C34;
-   position: absolute;
-  margin: 0;
-  right: 21%;
-  bottom: 40%;
-  font-size: 16px;
-  color: #e6e5e8;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.6s ease;
+.chatDisplay {
+  position: relative;
+  max-width: 30em;
+  margin: 1em;
+  background-color: #fff;
+  padding: 0.5em 1em;
+  font-size: 1.25em;
+  border-radius: 1rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3),
+    0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
+}
+
+.chatDisplay::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 100%;
+  right: 1.5em;
+  /* offset should move with padding of parent */
+  border: 0.75rem solid transparent;
+  border-top: none;
+
+  border-bottom-color: #fff;
+  filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, 0.1));
 }

@@ -6,6 +6,7 @@ import {
   setMessage,
   setDrawData,
 } from '../../actions/callActions'
+import { setReceivedMoved } from '../../actions/chessActions'
 import { callStates } from '../../constants/callConstants'
 import {
   setCallingDialogueVisibile,
@@ -72,12 +73,13 @@ const createPeerConnection = () => {
     }
 
     dataChannel.onmessage = (event) => {
-      store.dispatch(setMessage({ received: true, content: event.data }))
+      store.dispatch(setMessage(true, event.data))
     }
   }
 
   //outgoing data channel messages
   dataChannel = peerConnection.createDataChannel('chat')
+
   dataChannel.onopen = () => {
     console.log('chat data channel successfully opened')
   }
@@ -232,6 +234,13 @@ export const resetCallData = () => {
   store.dispatch(setCallState(callStates.CALL_AVAILABLE))
 }
 
+//function for sending chat messages using data channel
 export const sendMessageUsingDataChannel = (message) => {
   dataChannel.send(message)
+}
+
+//chess
+export const sendReceivedChessMoveToBoard = (move) => {
+  console.log('sending move received from server to board', move) //store
+  store.dispatch(setReceivedMoved(move))
 }

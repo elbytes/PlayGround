@@ -4,7 +4,6 @@ import { Row, Col } from 'react-bootstrap'
 const VideoCallDisplay = () => {
   return (
     <div>
-      <p>VideoCallDisplay</p>
       <Row>
         <Col>
           <DirectCall />

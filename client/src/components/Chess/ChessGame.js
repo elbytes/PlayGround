@@ -4,13 +4,10 @@ import PropTypes from 'prop-types'
 import Chess from 'chess.js'
 import Chessboard from 'chessboardjsx'
 import { sendMove } from '../../utils/wsConn/wsConn'
+import store from '../../store'
+import { setReceivedMoved } from '../../actions/chessActions'
+import { connect } from 'react-redux'
 
-export const receiveMove = (data) => {
-  console.log('receiving data from wss in ChessGame', data)
-  const { sourceSquare } = data
-  const { targetSquare } = data
-  this.onDrop(sourceSquare, targetSquare)
-}
 class HumanVsHuman extends Component {
   static propTypes = { children: PropTypes.func }
 
@@ -26,6 +23,13 @@ class HumanVsHuman extends Component {
     square: '',
     // array of past game moves
     history: [],
+    move: '',
+  }
+
+  getCurrentMoveFromStore() {
+    return {
+      move: store.getState().call.move,
+    }
   }
 
   componentDidMount() {
@@ -67,6 +71,7 @@ class HumanVsHuman extends Component {
   }
 
   onDrop = ({ sourceSquare, targetSquare }) => {
+    let turn
     // see if the move is legal
     let move = this.game.move({
       from: sourceSquare,
@@ -76,13 +81,30 @@ class HumanVsHuman extends Component {
 
     // illegal move
     if (move === null) return
-    this.setState(({ history, pieceSquare }) => ({
+
+    this.setState(({ history, pieceSquare, move }) => ({
       fen: this.game.fen(),
       history: this.game.history({ verbose: true }),
       squareStyles: squareStyling({ pieceSquare, history }),
+      move: this.game.move,
     }))
+    //emitting move to server
     sendMove(move)
   }
+
+  // onDropFromStore = ({ from, to }) => {
+  //   let move = this.game.move({
+  //     from: from,
+  //     to: to,
+  //     promotion: 'q', // always promote to a queen for example simplicity
+  //   })
+  //   this.setState(({ history, pieceSquare, move }) => ({
+  //     fen: this.game.fen(),
+  //     history: this.game.history({ verbose: true }),
+  //     squareStyles: squareStyling({ pieceSquare, history }),
+  //     move: this.game.move,
+  //   }))
+  // }
 
   onMouseOverSquare = (square) => {
     // get list of possible moves for this square
@@ -150,6 +172,7 @@ class HumanVsHuman extends Component {
       onMouseOverSquare: this.onMouseOverSquare,
       onMouseOutSquare: this.onMouseOutSquare,
       onDrop: this.onDrop,
+      onDropFromStore: this.onDropFromStore,
       dropSquareStyle,
       onDragOverSquare: this.onDragOverSquare,
       onSquareClick: this.onSquareClick,
@@ -165,6 +188,7 @@ export default function WithMoveValidation() {
         {({
           position,
           onDrop,
+          onDropFromStore,
           onMouseOverSquare,
           onMouseOutSquare,
           squareStyles,
@@ -178,6 +202,7 @@ export default function WithMoveValidation() {
             width={320}
             position={position}
             onDrop={onDrop}
+            onDropFromStore={onDropFromStore}
             onMouseOverSquare={onMouseOverSquare}
             onMouseOutSquare={onMouseOutSquare}
             boardStyle={{
@@ -194,6 +219,19 @@ export default function WithMoveValidation() {
       </HumanVsHuman>
     </div>
   )
+}
+
+const mapStateToProps = (state) => {
+  return {
+    move: store.getState().move,
+  }
+  console.log(store.getState().move)
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setReceivedMoved: (move) => dispatch(setReceivedMoved(move)),
+  }
 }
 
 const squareStyling = ({ pieceSquare, history }) => {
@@ -214,3 +252,5 @@ const squareStyling = ({ pieceSquare, history }) => {
     }),
   }
 }
+
+connect(mapStateToProps, mapDispatchToProps)(HumanVsHuman)

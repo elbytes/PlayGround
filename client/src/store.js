@@ -12,6 +12,7 @@ import {
 } from './reducers/userReducers'
 import dashboardReducer from './reducers/dashboardReducer'
 import { callReducer } from './reducers/callReducer'
+import { chessReducer } from './reducers/chessReducers'
 import { canvasReducer } from './reducers/canvasReducer'
 
 const reducer = combineReducers({
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   userHome: userHomeReducer,
   userFind: userFindReducer,
   call: callReducer,
+  chess: chessReducer,
   dashboard: dashboardReducer,
   canvas: canvasReducer,
 })
@@ -33,6 +35,12 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
+  chess: {},
+  // userRegister: {},
+  // userDetails: { userDetails: userInfoFromStorage },
+  // userUpdateProfileReducer: {},
+  // userHome: {},
+  // call: {},
 }
 
 const middleware = [thunk]

@@ -16,11 +16,12 @@ const initState = {
     received: false,
     content: '',
   },
-  activity: 'draw',
+  activity: '',
 }
 
 export const callReducer = (state = initState, action) => {
   switch (action.type) {
+    //call cases:
     case callActions.CALL_SET_LOCAL_STREAM:
       return { ...state, localStream: action.localStream }
     case callActions.CALL_SET_CALL_STATE:
@@ -37,6 +38,7 @@ export const callReducer = (state = initState, action) => {
       return { ...state, localCamEnabled: action.enabled }
     case callActions.CALL_SET_LOCAL_MIC_ENABLED:
       return { ...state, localMicEnabled: action.enabled }
+    //chat cases:
     case callActions.CALL_SET_CHAT_MESSAGE: {
       return { ...state, message: action.message }
     }
