@@ -10,7 +10,6 @@ const dashboardReducer = (state = initialState, action) => {
       return { ...state, username: action.username }
     case dashboardConstants.DASHBOARD_SET_ACTIVE_USERS:
       return { ...state, activeUsers: action.activeUsers }
-
     default:
       return state
   }

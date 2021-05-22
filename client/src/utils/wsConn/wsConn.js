@@ -1,14 +1,15 @@
 import socketClient from 'socket.io-client'
+import { fabric } from 'fabric'
 import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
-import { receiveMove } from '../../components/Chess/ChessGame'
 const SERVER = 'http://localhost:5000'
 
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
 }
 let socket
+let mySocketId
 
 export const connectWithWebSocket = () => {
   socket = socketClient(SERVER)
@@ -16,6 +17,7 @@ export const connectWithWebSocket = () => {
   socket.on('connection', () => {
     console.log('Successfully connected wit web socket server ')
     console.log(socket.id)
+    mySocketId = socket.id
   })
 
   socket.on('broadcast', (data) => {
@@ -53,10 +55,26 @@ export const connectWithWebSocket = () => {
     console.log('handling user-hanged-up in wss')
   })
 
+  //listener for activity selected
+  socket.on('activity', (activity) => {
+    console.log('received activity selected from server', activity)
+    webRTCHandler.handleActivitySelected(activity)
+  })
+
   //listeners for chess
   socket.on('move', (data) => {
     console.log('received data back from server', data)
     webRTCHandler.sendReceivedChessMoveToBoard(data) //to store
+  })
+
+  //listerner for canvas drawing
+  socket.on('draw', (data) => {
+    console.log('receiving draw data back from server', data)
+    webRTCHandler.handleReceivedDrawData(data)
+  })
+  //listener for adding a new shape to canvas
+  socket.on('new-add', (data) => {
+    //
   })
 }
 
@@ -112,15 +130,74 @@ const handleBroadcastEvents = (data) => {
   }
 }
 
-//emitting test event to server
-// export const clickCheck = (data) => {
-//   socket.emit('click', 'hello world from client' + data)
-//   console.log('emitting click check')
-// }
-
+//emit event for activity selected
+export const sendActivity = (activity) => {
+  socket.emit('activity', activity)
+  console.log('emitting activity event to server')
+}
 //emitting events to server for chessboard
 export const sendMove = (move) => {
   socket.emit('move', move)
   console.log('emitting move event')
-  webRTCHandler.sendReceivedChessMoveToBoard(move) //to store
 }
+
+//canvas emit events to server
+export const sendDraw = (drawData) => {
+  socket.emit('draw', drawData)
+  console.log('emitting draw event to server with drawData payload')
+  console.log(drawData)
+}
+//shape add event for canvas
+export const emitAdd = (obj) => {
+  console.log('emitting add shape event to server')
+  socket.emit('object-added', obj)
+}
+//shape modify event for canvas
+export const emitModify = (obj) => {
+  socket.emit('object-modified', obj)
+}
+
+//adding object on listener for add new shape
+export const addObj = (canvas) => {
+  socket.on('new-add', (data) => {
+    console.log('receiving an add object event')
+    const { obj, id } = data
+    let object
+
+    if (obj.type === 'rect') {
+      object = new fabric.Rect({
+        height: obj.height,
+        width: obj.width,
+      })
+    } else if (obj.type === 'circle') {
+      object = new fabric.Circle({
+        radius: obj.radius,
+      })
+    } else if (obj.type === 'triangle') {
+      object = new fabric.Triangle({
+        width: obj.width,
+        height: obj.height,
+      })
+    }
+
+    object.set({ id: id })
+    canvas.add(object)
+    canvas.renderAll()
+  })
+}
+
+//modifying object on listener for add new shape
+export const modifyObj = (canvas) => {
+  socket.on('new-modification', (data) => {
+    const { obj, id } = data
+    canvas.getObjects().forEach((object) => {
+      if (object.id === id) {
+        object.set(obj)
+        object.setCoords()
+        canvas.renderAll()
+      }
+    })
+  })
+}
+
+export { mySocketId }

@@ -85,3 +85,7 @@ main {
 .menu-icon:hover {
   cursor: pointer;
 }
+
+.container {
+  max-width: 90%;
+}

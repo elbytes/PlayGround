@@ -36,11 +36,6 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
   chess: {},
-  // userRegister: {},
-  // userDetails: { userDetails: userInfoFromStorage },
-  // userUpdateProfileReducer: {},
-  // userHome: {},
-  // call: {},
 }
 
 const middleware = [thunk]

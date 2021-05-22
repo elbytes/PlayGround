@@ -4,8 +4,10 @@ import {
   setCallRejected,
   setRemoteStream,
   setMessage,
+  setActivity,
   setDrawData,
 } from '../../actions/callActions'
+import { setDrawDataAction } from '../../actions/canvasActions'
 import { setReceivedMoved } from '../../actions/chessActions'
 import { callStates } from '../../constants/callConstants'
 import {
@@ -14,6 +16,7 @@ import {
 } from '../../reducers/callReducer'
 import store from '../../store'
 import * as wss from '../wsConn/wsConn'
+import { fabric } from 'fabric'
 
 const preOfferAnswers = {
   CALL_ACCEPTED: 'CALL_ACCEPTED',
@@ -32,6 +35,7 @@ const configuration = {
 let connectedUserSocketId
 let peerConnection
 let dataChannel
+
 export const getLocalStream = () => {
   navigator.mediaDevices
     .getUserMedia(defaultConstrains)
@@ -84,8 +88,8 @@ const createPeerConnection = () => {
     console.log('chat data channel successfully opened')
   }
 
+  //send ice candidate to other user
   peerConnection.onicecandidate = (event) => {
-    //send ice candidate to other user
     console.log('Getting candidates from STUN server')
     if (event.candidate) {
       wss.sendWebRTCCandidate({
@@ -239,8 +243,19 @@ export const sendMessageUsingDataChannel = (message) => {
   dataChannel.send(message)
 }
 
+//function for handling activity selected
+export const handleActivitySelected = (activity) => {
+  store.dispatch(setActivity(activity))
+}
 //chess
 export const sendReceivedChessMoveToBoard = (move) => {
-  console.log('sending move received from server to board', move) //store
+  console.log('sending move received from server to store', move)
   store.dispatch(setReceivedMoved(move))
+}
+
+//function that deasl with the draw data received from server
+export const handleReceivedDrawData = (drawData) => {
+  //need to dispatch the drawData to store here
+  // store.dispatch(setDrawDataAction(drawData))
+  // console.log('dispatching drawData to store', drawData)
 }

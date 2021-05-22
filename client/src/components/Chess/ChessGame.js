@@ -1,256 +1,88 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-// import { Chess } from 'chess.js' // import Chess from  "chess.js"(default) if recieving an error about new Chess() not being a constructor
+import React, { useState, useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux'
 import Chess from 'chess.js'
 import Chessboard from 'chessboardjsx'
 import { sendMove } from '../../utils/wsConn/wsConn'
-import store from '../../store'
-import { setReceivedMoved } from '../../actions/chessActions'
-import { connect } from 'react-redux'
 
-class HumanVsHuman extends Component {
-  static propTypes = { children: PropTypes.func }
+function ChessGame() {
+  const [fen, setFen] = useState('start')
+  const opponentMove = useSelector((state) => state.chess.opponentMove)
 
-  state = {
-    fen: 'start',
-    // square styles for active drop square
-    dropSquareStyle: {},
-    // custom square styles
-    squareStyles: {},
-    // square with the currently clicked piece
-    pieceSquare: '',
-    // currently clicked square
-    square: '',
-    // array of past game moves
-    history: [],
-    move: '',
-  }
+  let game = useRef(null)
 
-  getCurrentMoveFromStore() {
-    return {
-      move: store.getState().call.move,
-    }
-  }
+  useEffect(() => {
+    game.current = new Chess()
+  }, [])
 
-  componentDidMount() {
-    this.game = new Chess()
-  }
-
-  // keep clicked square style and remove hint squares
-  removeHighlightSquare = () => {
-    this.setState(({ pieceSquare, history }) => ({
-      squareStyles: squareStyling({ pieceSquare, history }),
-    }))
-  }
-
-  // show possible moves
-  highlightSquare = (sourceSquare, squaresToHighlight) => {
-    const highlightStyles = [sourceSquare, ...squaresToHighlight].reduce(
-      (a, c) => {
-        return {
-          ...a,
-          ...{
-            [c]: {
-              background:
-                'radial-gradient(circle, #fffc00 36%, transparent 40%)',
-              borderRadius: '50%',
-            },
-          },
-          ...squareStyling({
-            history: this.state.history,
-            pieceSquare: this.state.pieceSquare,
-          }),
-        }
-      },
-      {}
-    )
-
-    this.setState(({ squareStyles }) => ({
-      squareStyles: { ...squareStyles, ...highlightStyles },
-    }))
-  }
-
-  onDrop = ({ sourceSquare, targetSquare }) => {
-    let turn
-    // see if the move is legal
-    let move = this.game.move({
-      from: sourceSquare,
-      to: targetSquare,
-      promotion: 'q', // always promote to a queen for example simplicity
-    })
-
-    // illegal move
+  const onDrop = ({ sourceSquare, targetSquare }) => {
+    let move = game.current.move({ from: sourceSquare, to: targetSquare })
+    //check legal moves
+    //move function returns null for illegal moves
     if (move === null) return
-
-    this.setState(({ history, pieceSquare, move }) => ({
-      fen: this.game.fen(),
-      history: this.game.history({ verbose: true }),
-      squareStyles: squareStyling({ pieceSquare, history }),
-      move: this.game.move,
-    }))
-    //emitting move to server
+    //fen string
+    setFen(game.current.fen())
     sendMove(move)
   }
 
-  // onDropFromStore = ({ from, to }) => {
-  //   let move = this.game.move({
-  //     from: from,
-  //     to: to,
-  //     promotion: 'q', // always promote to a queen for example simplicity
-  //   })
-  //   this.setState(({ history, pieceSquare, move }) => ({
-  //     fen: this.game.fen(),
-  //     history: this.game.history({ verbose: true }),
-  //     squareStyles: squareStyling({ pieceSquare, history }),
-  //     move: this.game.move,
-  //   }))
-  // }
-
-  onMouseOverSquare = (square) => {
-    // get list of possible moves for this square
-    let moves = this.game.moves({
-      square: square,
-      verbose: true,
-    })
-
-    // exit if there are no moves available for this square
-    if (moves.length === 0) return
-
-    let squaresToHighlight = []
-    for (var i = 0; i < moves.length; i++) {
-      squaresToHighlight.push(moves[i].to)
-    }
-
-    this.highlightSquare(square, squaresToHighlight)
+  const onDropFromStore = () => {
+    console.log('opponentMove from ChessGame', opponentMove.to)
+    onDrop(opponentMove.from, opponentMove.to)
   }
 
-  onMouseOutSquare = (square) => this.removeHighlightSquare(square)
-
-  // central squares get diff dropSquareStyles
-  onDragOverSquare = (square) => {
-    this.setState({
-      dropSquareStyle:
-        square === 'e4' || square === 'd4' || square === 'e5' || square === 'd5'
-          ? { backgroundColor: 'cornFlowerBlue' }
-          : { boxShadow: 'inset 0 0 1px 4px rgb(255, 255, 0)' },
-    })
+  const resetGame = () => {
+    game.current.clear()
+    game.current.reset()
+    //also clear chessboard
+    setFen('start')
   }
 
-  onSquareClick = (square) => {
-    this.setState(({ history }) => ({
-      squareStyles: squareStyling({ pieceSquare: square, history }),
-      pieceSquare: square,
-    }))
-
-    let move = this.game.move({
-      from: this.state.pieceSquare,
-      to: square,
-      promotion: 'q', // always promote to a queen for example simplicity
-    })
-
-    // illegal move
-    if (move === null) return
-
-    this.setState({
-      fen: this.game.fen(),
-      history: this.game.history({ verbose: true }),
-      pieceSquare: '',
-    })
-  }
-
-  onSquareRightClick = (square) =>
-    this.setState({
-      squareStyles: { [square]: { backgroundColor: 'deepPink' } },
-    })
-
-  render() {
-    const { fen, dropSquareStyle, squareStyles } = this.state
-
-    return this.props.children({
-      squareStyles,
-      position: fen,
-      onMouseOverSquare: this.onMouseOverSquare,
-      onMouseOutSquare: this.onMouseOutSquare,
-      onDrop: this.onDrop,
-      onDropFromStore: this.onDropFromStore,
-      dropSquareStyle,
-      onDragOverSquare: this.onDragOverSquare,
-      onSquareClick: this.onSquareClick,
-      onSquareRightClick: this.onSquareRightClick,
-    })
-  }
-}
-
-export default function WithMoveValidation() {
   return (
     <div>
-      <HumanVsHuman>
-        {({
-          position,
-          onDrop,
-          onDropFromStore,
-          onMouseOverSquare,
-          onMouseOutSquare,
-          squareStyles,
-          dropSquareStyle,
-          onDragOverSquare,
-          onSquareClick,
-          onSquareRightClick,
-        }) => (
-          <Chessboard
-            id='humanVsHuman'
-            width={320}
-            position={position}
-            onDrop={onDrop}
-            onDropFromStore={onDropFromStore}
-            onMouseOverSquare={onMouseOverSquare}
-            onMouseOutSquare={onMouseOutSquare}
-            boardStyle={{
-              borderRadius: '5px',
-              boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`,
-            }}
-            squareStyles={squareStyles}
-            dropSquareStyle={dropSquareStyle}
-            onDragOverSquare={onDragOverSquare}
-            onSquareClick={onSquareClick}
-            onSquareRightClick={onSquareRightClick}
-          />
-        )}
-      </HumanVsHuman>
+      {game.current && game.current.game_over() ? (
+        <div>
+          <span>game over</span>
+          <button onClick={resetGame}>Play Again</button>
+        </div>
+      ) : (
+        <div>
+          <span>Game</span>
+        </div>
+      )}
+      {game.current && game.current.in_check() ? (
+        <div>
+          <span>CHECKED</span>
+        </div>
+      ) : (
+        <span></span>
+      )}
+      {game.current && game.current.in_checkmate() ? (
+        <div>
+          <span>CHECKMATE</span>
+        </div>
+      ) : (
+        <span></span>
+      )}
+      {game.current && game.current.in_draw() ? (
+        <div>
+          <span>DRAW</span>
+        </div>
+      ) : (
+        <span></span>
+      )}
+      {game.current && game.current.in_stalemate() ? (
+        <div>
+          <span>STALEMATE</span>
+        </div>
+      ) : (
+        <span></span>
+      )}
+      <Chessboard
+        position={fen}
+        onDrop={onDrop}
+        onDropFromStore={onDropFromStore}
+      />
     </div>
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    move: store.getState().move,
-  }
-  console.log(store.getState().move)
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    setReceivedMoved: (move) => dispatch(setReceivedMoved(move)),
-  }
-}
-
-const squareStyling = ({ pieceSquare, history }) => {
-  const sourceSquare = history.length && history[history.length - 1].from
-  const targetSquare = history.length && history[history.length - 1].to
-
-  return {
-    [pieceSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
-    ...(history.length && {
-      [sourceSquare]: {
-        backgroundColor: 'rgba(255, 255, 0, 0.4)',
-      },
-    }),
-    ...(history.length && {
-      [targetSquare]: {
-        backgroundColor: 'rgba(255, 255, 0, 0.4)',
-      },
-    }),
-  }
-}
-
-connect(mapStateToProps, mapDispatchToProps)(HumanVsHuman)
+export default ChessGame

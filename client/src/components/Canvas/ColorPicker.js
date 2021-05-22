@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { CirclePicker } from 'react-color'
 import { Button } from 'react-bootstrap'
-
+import { setColor } from '../../actions/canvasActions'
 function ColorPicker(props) {
   const [pickerVisible, setPickerVisible] = useState(false)
   const [pickedColor, setPickedColor] = useState('#eb7134')
-
+  const dispatch = useDispatch()
   const styles = {
     colorPickerBtn: {
       backgroundColor: pickedColor,
@@ -21,9 +22,8 @@ function ColorPicker(props) {
   const handleColorChange = ({ hex }) => {
     console.log(hex)
     setPickedColor(hex)
-    //pass the picked color to CanvasIndex
-    props.onColorPicked(hex)
-    setPickerVisible(!pickerVisible)
+    //dispatch to store
+    dispatch(setColor(hex))
   }
 
   return (

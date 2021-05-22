@@ -5,6 +5,7 @@ const initState = {
   callState: callActions.callStates.CALL_UNAVAILABLE,
   callingDialogueVisibile: false,
   callerUsername: '',
+  callee: '',
   callRejected: {
     rejected: false,
     reason: '',
@@ -30,6 +31,8 @@ export const callReducer = (state = initState, action) => {
       return { ...state, callingDialogueVisibile: action.visibile }
     case callActions.CALL_SET_CALLER_USERNAME:
       return { ...state, callerUsername: action.callerUsername }
+    case callActions.CALL_SET_CALLEE:
+      return { ...state, callee: action.callee }
     case callActions.CALL_SET_CALL_REJECTED:
       return { ...state, callRejected: action.callRejected }
     case callActions.CALL_SET_REMOTE_STREAM:

@@ -8,9 +8,11 @@ import VideoCallDisplay from './VideoCallDisplay'
 import ActiveUsersList from '../ActiveUsersList/ActiveUsersList'
 import CanvasIndex from '../Canvas/CanvasIndex'
 import ChessIndex from '../Chess/ChessIndex'
+import PuzzleIndex from '../puzzle/PuzzleIndex'
+import BookIndex from '../Books/BookIndex'
 import ActivityListScreen from '../../screens/ActivityListScreen'
-import Chat from '../Chat/Chat'
 import { callStates } from '../../constants/callConstants'
+
 const styles = {
   menu: {
     cursor: 'pointer',
@@ -18,40 +20,42 @@ const styles = {
 }
 const VideoCallDashboard = ({ id }) => {
   const [activityMenuVisible, setActivityMenuVisible] = useState(false)
-  const selectedActivity = useSelector((state) => state.activity)
+  const selectedActivity = useSelector((state) => state.call.activity)
 
   useEffect(() => {
     webRTCHandler.getLocalStream()
-    logging()
     return () => {}
   }, [selectedActivity])
 
-  const handleActivityMenuClicked = (e) => {
-    console.log('activity menu clicked')
-    setActivityMenuVisible(!activityMenuVisible)
-  }
+  // const handleActivityMenuClicked = (e) => {
+  //   console.log('activity menu clicked')
+  //   setActivityMenuVisible(!activityMenuVisible)
+  // }
 
-  const logging = () => {
-    console.log('log')
-  }
+  // const logging = () => {
+  //   console.log('log')
+  // }
 
   return (
     <div className='home'>
       <div className='border'>
         <Row>
-          <Col>
+          {/* <Col>
             <CgMenuGridO
               size='2em'
               onClick={handleActivityMenuClicked}
               style={styles.menu}
             />
-          </Col>
+          </Col> */}
         </Row>
         <Row>
           <Col>
             <div className='border'>
-              {/* {activityMenuVisible && <ActivityListScreen />} */}
-              {/* {selectedActivity && <CanvasIndex />} */}
+              {/* {activityMenuVisible && <ActivityListScreen />}
+              {selectedActivity === 'draw' && <CanvasIndex />}
+              {selectedActivity === 'chess' && <ChessIndex />}
+              {selectedActivity === 'puzzle' && <PuzzleIndex />}
+              {selectedActivity === 'book' && <BookIndex />} */}
               <ChessIndex />
             </div>
           </Col>
@@ -68,8 +72,15 @@ const VideoCallDashboard = ({ id }) => {
         <Row></Row>
         <div>
           <div>
-            Active Users: <ActiveUsersList />
+            {callStates.CALL_AVAILABLE ? (
+              <ActiveUsersList />
+            ) : (
+              <span>Call</span>
+            )}
           </div>
+        </div>
+        <div>
+          <div>{/* <CanvasIndex /> */}</div>
         </div>
       </div>
     </div>

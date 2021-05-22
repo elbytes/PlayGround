@@ -8,8 +8,8 @@ import {
   CALL_SET_LOCAL_MIC_ENABLED,
   CALL_SET_LOCAL_CAM_ENABLED,
   CALL_SET_CHAT_MESSAGE,
-  CALL_SET_DRAW_DATA,
   CALL_SET_ACTIVITY,
+  CALL_SET_CALLEE,
 } from '../constants/callConstants'
 import callStates from '../constants/callConstants'
 
@@ -39,6 +39,13 @@ export const setCallerUsername = (callerUsername) => {
   return {
     type: CALL_SET_CALLER_USERNAME,
     callerUsername,
+  }
+}
+
+export const setCallee = (callee) => {
+  return {
+    type: CALL_SET_CALLEE,
+    callee,
   }
 }
 
@@ -89,16 +96,5 @@ export const setActivity = (activity) => {
   return {
     type: CALL_SET_ACTIVITY,
     activity: activity,
-  }
-}
-
-//canvas action creator
-export const setDrawData = (drawDataReceived, drawData) => {
-  return {
-    type: CALL_SET_DRAW_DATA,
-    drawData: {
-      received: drawDataReceived,
-      data: drawData,
-    },
   }
 }

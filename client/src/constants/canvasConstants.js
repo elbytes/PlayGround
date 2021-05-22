@@ -1,1 +1,2 @@
 export const CANVAS_SET_DRAW = 'CANVAS_SET_DRAW'
+export const CANVAS_SET_COLOR = 'CANVAS_SET_COLOR'

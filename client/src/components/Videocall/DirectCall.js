@@ -28,7 +28,6 @@ const DirectCall = (props) => {
     hideCallRejectedDialog,
     message,
     setDirectCallMessage,
-    setReceivedMoved,
   } = props
   return (
     <>
@@ -86,7 +85,6 @@ function mapDispatchToProps(dispatch) {
     setMicEnabled: (enabled) => dispatch(setLocalMicEnabled(enabled)),
     setDirectCallMessage: (received, content) =>
       dispatch(setMessage(received, content)),
-    setReceivedMoved: (move) => dispatch(setReceivedMoved(move)),
   }
 }
 function mapStoreStateToProps({ call }) {

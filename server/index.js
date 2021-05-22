@@ -52,11 +52,6 @@ io.on('connection', (socket) => {
   console.log('New user connected')
   console.log(socket.id)
 
-  //test listeners
-  // socket.on('click', (data) => {
-  //   console.log('Got event from client: ' + data)
-  // })
-
   //when a user sets nickname for videocall
   socket.on('register-new-user', (data) => {
     peers.push({
@@ -123,13 +118,29 @@ io.on('connection', (socket) => {
     io.to(data.connectedUserSocketId).emit('user-hanged-up')
   })
 
-  //listen to draw happening event from clinet
+  //listener for activity selected
+  socket.on('activity', (activity) => {
+    console.log('received activity choice on server')
+    socket.broadcast.emit('activity', activity)
+  })
+
+  //listeners for canvas
   socket.on('draw', (data) => {
     console.log('handling draw on server')
-    console.log(data)
+    console.log('loging draw data from server: ', data)
     //send draw data to other client
-    socket.to(data.connectedUserSocketId).emit('draw', data)
+    // socket.to(data.connectedUserSocketId).emit('draw', data)
+    socket.broadcast.emit('draw', data)
     console.log('connectedUserSocketId', data.connectedUserSocketId)
+  })
+
+  socket.on('object-added', (data) => {
+    socket.broadcast.emit('new-add', data)
+    console.log('receiving add shape event in server')
+  })
+
+  socket.on('object-modified', (data) => {
+    socket.broadcast.emit('new-modification', data)
   })
 
   //listeners for chess

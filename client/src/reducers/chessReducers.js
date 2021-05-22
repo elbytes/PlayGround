@@ -1,12 +1,13 @@
-import * as chessActions from '../actions/chessActions'
+import { CALL_SET_RECEIVED_MOVE } from '../constants/chessConstants'
+
 const initialState = {
-  move: '',
+  opponentMove: '',
 }
 
 export const chessReducer = (state = initialState, action) => {
   switch (action.type) {
-    case chessActions.CALL_SET_RECEIVED_MOVE:
-      return { ...state, move: action.move }
+    case CALL_SET_RECEIVED_MOVE:
+      return { ...state, opponentMove: action.opponentMove }
     default:
       return state
   }
