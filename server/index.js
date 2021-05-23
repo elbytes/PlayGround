@@ -145,9 +145,8 @@ io.on('connection', (socket) => {
 
   //listeners for chess
   socket.on('move', (data) => {
-    socket.broadcast.emit('move', data)
-    // io.to(data.connectedUserSocketId).emit('move', data)
-    console.log('the data received from chess clinet', data)
+    io.to(data.socket).emit('move', data.move)
+    console.log('the data received from chess clinet', data.move)
   })
 })
 

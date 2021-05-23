@@ -248,9 +248,9 @@ export const handleActivitySelected = (activity) => {
   store.dispatch(setActivity(activity))
 }
 //chess
-export const sendReceivedChessMoveToBoard = (move) => {
-  console.log('sending move received from server to store', move)
-  store.dispatch(setReceivedMoved(move))
+export const sendReceivedChessMoveToBoard = (data) => {
+  console.log('sending move received from server to store', data)
+  store.dispatch(setReceivedMoved(data))
 }
 
 //function that deasl with the draw data received from server
@@ -259,3 +259,5 @@ export const handleReceivedDrawData = (drawData) => {
   // store.dispatch(setDrawDataAction(drawData))
   // console.log('dispatching drawData to store', drawData)
 }
+
+export { connectedUserSocketId }

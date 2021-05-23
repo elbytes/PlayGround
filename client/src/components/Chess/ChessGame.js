@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux'
 import Chess from 'chess.js'
 import Chessboard from 'chessboardjsx'
 import { sendMove } from '../../utils/wsConn/wsConn'
-
+import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
 function ChessGame() {
   const [fen, setFen] = useState('start')
   const opponentMove = useSelector((state) => state.chess.opponentMove)
-
+  console.log(opponentMove)
   let game = useRef(null)
 
   useEffect(() => {
@@ -21,12 +21,17 @@ function ChessGame() {
     if (move === null) return
     //fen string
     setFen(game.current.fen())
-    sendMove(move)
+    let dataToSend = { socket: connectedUserSocketId, move: move }
+    console.log(dataToSend)
+    sendMove(dataToSend)
   }
 
   const onDropFromStore = () => {
+    console.log('is this running')
     console.log('opponentMove from ChessGame', opponentMove.to)
-    onDrop(opponentMove.from, opponentMove.to)
+    let sourceSquare = opponentMove.from
+    let targetSquare = opponentMove.to
+    onDrop({ sourceSquare, targetSquare })
   }
 
   const resetGame = () => {
@@ -38,6 +43,7 @@ function ChessGame() {
 
   return (
     <div>
+      <button onClick={onDropFromStore}>Run opponentMove</button>
       {game.current && game.current.game_over() ? (
         <div>
           <span>game over</span>

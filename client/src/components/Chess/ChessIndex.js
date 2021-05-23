@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import ChessGame from './ChessGame'
 
 const ChessIndex = () => {
