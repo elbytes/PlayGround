@@ -67,6 +67,10 @@ export const connectWithWebSocket = () => {
     webRTCHandler.sendReceivedChessMoveToBoard(data) //to store
   })
 
+  socket.on('game-state', (data) => {
+    console.log('received data back from server', data)
+    webRTCHandler.handleGameStateChange(data)
+  })
   //listerner for canvas drawing
   socket.on('draw', (data) => {
     console.log('receiving draw data back from server', data)
@@ -139,6 +143,11 @@ export const sendActivity = (activity) => {
 export const sendMove = (move) => {
   socket.emit('move', move)
   console.log('emitting move event')
+}
+
+export const sendGameState = (gameState) => {
+  socket.emit('game-state', gameState)
+  console.log('emitting game state change')
 }
 
 //canvas emit events to server

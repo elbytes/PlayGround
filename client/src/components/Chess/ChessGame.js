@@ -1,19 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Chess from 'chess.js'
 import Chessboard from 'chessboardjsx'
-import { sendMove } from '../../utils/wsConn/wsConn'
+import { sendMove, sendGameState } from '../../utils/wsConn/wsConn'
 import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
 function ChessGame() {
   const [fen, setFen] = useState('start')
+  const [gameState, setGameState] = useState('inProgress')
+
   const opponentMove = useSelector((state) => state.chess.opponentMove)
   console.log(opponentMove)
   let game = useRef(null)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     game.current = new Chess()
   }, [])
 
+  let gameStateDataToSend = {
+    socket: connectedUserSocketId,
+    gameState: gameState,
+  }
+  if (game.current && game.current.in_check()) {
+    setGameState('inCheck')
+    sendGameState(gameStateDataToSend)
+  }
+  if (game.current && game.current.in_checkmate()) {
+    setGameState('inCheckmate')
+    sendGameState(gameStateDataToSend)
+  }
+  if (game.current && game.current.in_draw()) {
+    setGameState('inDraw')
+    sendGameState(gameStateDataToSend)
+  }
+  if (game.current && game.current.in_stalemate()) {
+    setGameState('stalemate')
+    sendGameState(gameStateDataToSend)
+  }
   const onDrop = ({ sourceSquare, targetSquare }) => {
     let move = game.current.move({ from: sourceSquare, to: targetSquare })
     //check legal moves

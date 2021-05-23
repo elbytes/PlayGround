@@ -8,7 +8,10 @@ import {
   setDrawData,
 } from '../../actions/callActions'
 import { setDrawDataAction } from '../../actions/canvasActions'
-import { setReceivedMoved } from '../../actions/chessActions'
+import {
+  setReceivedMoved,
+  setGameStateChange,
+} from '../../actions/chessActions'
 import { callStates } from '../../constants/callConstants'
 import {
   setCallingDialogueVisibile,
@@ -251,6 +254,10 @@ export const handleActivitySelected = (activity) => {
 export const sendReceivedChessMoveToBoard = (data) => {
   console.log('sending move received from server to store', data)
   store.dispatch(setReceivedMoved(data))
+}
+
+export const handleGameStateChange = (data) => {
+  store.dispatch(setGameStateChange(data))
 }
 
 //function that deasl with the draw data received from server

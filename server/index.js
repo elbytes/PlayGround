@@ -148,6 +148,11 @@ io.on('connection', (socket) => {
     io.to(data.socket).emit('move', data.move)
     console.log('the data received from chess clinet', data.move)
   })
+
+  socket.on('game-state', (data) => {
+    io.to(data.socket).emit('game-state', data.gameState)
+    console.log('game state data received from chess client')
+  })
 })
 
 httpServer.listen(PORT)

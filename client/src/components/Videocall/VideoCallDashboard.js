@@ -17,9 +17,12 @@ const styles = {
   menu: {
     cursor: 'pointer',
   },
+  verticalMArgin: {
+    marginTop: '0.5rem',
+    marginBottom: '0.5rem',
+  },
 }
 const VideoCallDashboard = ({ id }) => {
-  const [activityMenuVisible, setActivityMenuVisible] = useState(false)
   const selectedActivity = useSelector((state) => state.call.activity)
 
   useEffect(() => {
@@ -27,61 +30,42 @@ const VideoCallDashboard = ({ id }) => {
     return () => {}
   }, [selectedActivity])
 
-  // const handleActivityMenuClicked = (e) => {
-  //   console.log('activity menu clicked')
-  //   setActivityMenuVisible(!activityMenuVisible)
-  // }
-
-  // const logging = () => {
-  //   console.log('log')
-  // }
-
   return (
     <div className='home'>
       <div className='border'>
-        <Row>
-          {/* <Col>
-            <CgMenuGridO
-              size='2em'
-              onClick={handleActivityMenuClicked}
-              style={styles.menu}
-            />
-          </Col> */}
-        </Row>
-        <Row>
+        <Row></Row>
+        <Row style={styles.verticalMArgin}>
           <Col>
             <div className='border'>
-              {/* {activityMenuVisible && <ActivityListScreen />}
-              {selectedActivity === 'draw' && <CanvasIndex />}
-              {selectedActivity === 'chess' && <ChessIndex />}
-              {selectedActivity === 'puzzle' && <PuzzleIndex />}
-              {selectedActivity === 'book' && <BookIndex />} */}
               <ChessIndex />
             </div>
           </Col>
           <Col>
-            <Row>
+            <Row style={styles.verticalMArgin}>
               <Col>
                 <div className='border'>
                   <VideoCallDisplay />
                 </div>
               </Col>
             </Row>
+            <Row style={styles.verticalMArgin}>
+              <Col>
+                <ActivityListScreen />
+              </Col>
+            </Row>
           </Col>
         </Row>
-        <Row></Row>
-        <div>
-          <div>
-            {callStates.CALL_AVAILABLE ? (
-              <ActiveUsersList />
-            ) : (
-              <span>Call</span>
-            )}
-          </div>
-        </div>
-        <div>
-          <div>{/* <CanvasIndex /> */}</div>
-        </div>
+        <Row>
+          <Col>
+            <div>
+              {callStates.CALL_AVAILABLE ? (
+                <ActiveUsersList />
+              ) : (
+                <span>Call</span>
+              )}
+            </div>
+          </Col>
+        </Row>
       </div>
     </div>
   )

@@ -13,10 +13,15 @@ import {
   setLocalMicEnabled,
   setMessage,
 } from '../../actions/callActions'
-import { setReceivedMoved } from '../../actions/chessActions'
 import ConversationBtns from '../Videocall/ConversationBtns/ConversationBtns'
 import Chat from '../Chat/Chat'
 
+const styles = {
+  verticalMArgin: {
+    marginTop: '0.5rem',
+    marginBottom: '0.5rem',
+  },
+}
 const DirectCall = (props) => {
   const {
     localStream,
@@ -31,7 +36,7 @@ const DirectCall = (props) => {
   } = props
   return (
     <>
-      <Row>
+      <Row style={styles.verticalMArgin}>
         <Col>
           <LocalVideoView localStream={localStream} />
         </Col>
@@ -41,7 +46,7 @@ const DirectCall = (props) => {
           )}
         </Col>
       </Row>
-      <Row>
+      <Row style={styles.verticalMArgin}>
         <Col>
           {callRejected.rejected && (
             <CallRejected
@@ -51,17 +56,17 @@ const DirectCall = (props) => {
           )}
         </Col>
       </Row>
-      <Row>
+      <Row style={styles.verticalMArgin}>
         <Col>
           {callState === callStates.CALL_REQUESTED && (
             <IncomingCallDialogue callerUsername={callerUsername} />
           )}
         </Col>
       </Row>
-      <Row>
+      <Row style={styles.verticalMArgin}>
         <Col>{callingDialogueVisibile && <CallingDialogue />}</Col>
       </Row>
-      <Row>
+      <Row style={styles.verticalMArgin}>
         <Col>
           {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
             <ConversationBtns {...props} />

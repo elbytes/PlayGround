@@ -8,39 +8,33 @@ import { sendActivity } from '../utils/wsConn/wsConn'
 const styles = {
   menu: {
     cursor: 'pointer',
-    margin: '0.8em',
+    marginBottom: '1em',
+    marginTop: '1em',
   },
-  menuText: {
-    textAlign: 'center',
-  },
+  menuText: {},
 }
 const ActivityListScreen = () => {
   // const [selectedActivity, setSelectedActivity] = useState('')
   // let selectedActivity
-  const dispatch = useDispatch()
 
   const handleDrawClicked = () => {
     console.log('handling draw clicked')
-    dispatch(setActivity('draw'))
     sendActivity('draw')
   }
   const handleChessClicked = () => {
     console.log('handling chess clicked')
     // setSelectedActivity('chess')
-    dispatch(setActivity('chess'))
     sendActivity('chess')
   }
   const handlePuzzleClicked = () => {
     console.log('handling puzzle clicked')
     // setSelectedActivity('puzzle')
-    dispatch(setActivity('puzzle'))
     sendActivity('puzzle')
   }
 
   const handleBookClicked = () => {
     console.log('handling book clicked')
     // setSelectedActivity('book')
-    dispatch(setActivity('book'))
     sendActivity('book')
   }
   return (
