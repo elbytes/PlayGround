@@ -11,6 +11,7 @@ import { FaEraser } from 'react-icons/fa'
 import { v1 as uuid } from 'uuid'
 import { setDrawDataAction } from '../../actions/canvasActions'
 import { sendDraw } from '../../utils/wsConn/wsConn'
+import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
 import {
   emitAdd,
   emitModify,
@@ -56,7 +57,11 @@ const CanvasBoard = (props) => {
             obj: options.target,
             id: options.target.id,
           }
-          emitModify(modifiedObj)
+          let drawDataToSend = {
+            socket: connectedUserSocketId,
+            drawData: modifiedObj,
+          }
+          emitModify(drawDataToSend)
         }
       })
 
@@ -66,7 +71,11 @@ const CanvasBoard = (props) => {
             obj: options.target,
             id: options.target.id,
           }
-          emitModify(modifiedObj)
+          let drawDataToSend = {
+            socket: connectedUserSocketId,
+            drawData: modifiedObj,
+          }
+          emitModify(drawDataToSend)
         }
       })
 
@@ -99,7 +108,11 @@ const CanvasBoard = (props) => {
     //add obj to canvas
     canvas.add(object)
     canvas.renderAll()
-    emitAdd({ obj: object, id: object.id })
+    let drawDataToSend = {
+      object: { obj: object, id: object.id },
+      socket: connectedUserSocketId,
+    }
+    emitAdd(drawDataToSend)
   }
 
   const drawBrush = () => {

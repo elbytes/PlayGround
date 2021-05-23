@@ -9,7 +9,6 @@ import {
   CALL_SET_LOCAL_CAM_ENABLED,
   CALL_SET_CHAT_MESSAGE,
   CALL_SET_ACTIVITY,
-  CALL_SET_CALLEE,
 } from '../constants/callConstants'
 import callStates from '../constants/callConstants'
 
@@ -39,13 +38,6 @@ export const setCallerUsername = (callerUsername) => {
   return {
     type: CALL_SET_CALLER_USERNAME,
     callerUsername,
-  }
-}
-
-export const setCallee = (callee) => {
-  return {
-    type: CALL_SET_CALLEE,
-    callee,
   }
 }
 
@@ -95,6 +87,9 @@ export const setMessage = (messageReceived, messageContent) => {
 export const setActivity = (activity) => {
   return {
     type: CALL_SET_ACTIVITY,
-    activity: activity,
+    activity: {
+      socket: activity.socket,
+      activity: activity.activity,
+    },
   }
 }

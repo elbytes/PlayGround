@@ -1,7 +1,6 @@
 import React from 'react'
 import userAvatar from '../../images/userAvatar.png'
 import { callToOtherUser } from '../../utils/webRTC/webRTCHandler'
-import { setCallee } from '../../actions/callActions'
 
 const ActiveUsersListItem = (props) => {
   const { activeUser } = props
@@ -9,7 +8,6 @@ const ActiveUsersListItem = (props) => {
   const handleContactItemClicked = () => {
     callToOtherUser(activeUser)
     console.log('calling user')
-    setCallee('this')
   }
   return (
     <div className='active_user_list_item' onClick={handleContactItemClicked}>

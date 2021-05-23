@@ -1,10 +1,12 @@
 import { Row, Col, Container, Card } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setActivity } from '../actions/callActions'
 import { FaPaintBrush, FaChessKnight, FaBook } from 'react-icons/fa'
 import { BsPuzzleFill } from 'react-icons/bs'
 import { sendActivity } from '../utils/wsConn/wsConn'
+import { connectedUserSocketId } from '../utils/webRTC/webRTCHandler'
+
 const styles = {
   menu: {
     cursor: 'pointer',
@@ -14,28 +16,46 @@ const styles = {
   menuText: {},
 }
 const ActivityListScreen = () => {
-  // const [selectedActivity, setSelectedActivity] = useState('')
-  // let selectedActivity
-
+  const dispatch = useDispatch()
   const handleDrawClicked = () => {
     console.log('handling draw clicked')
-    sendActivity('draw')
+    let activityDataToSend = {
+      socket: connectedUserSocketId,
+      activity: 'draw',
+    }
+    console.log(activityDataToSend)
+    sendActivity(activityDataToSend)
+    dispatch(setActivity(activityDataToSend))
   }
   const handleChessClicked = () => {
     console.log('handling chess clicked')
-    // setSelectedActivity('chess')
-    sendActivity('chess')
+    let activityDataToSend = {
+      socket: connectedUserSocketId,
+      activity: 'chess',
+    }
+    console.log(activityDataToSend)
+    sendActivity(activityDataToSend)
+    dispatch(setActivity(activityDataToSend))
   }
   const handlePuzzleClicked = () => {
     console.log('handling puzzle clicked')
-    // setSelectedActivity('puzzle')
-    sendActivity('puzzle')
+    let activityDataToSend = {
+      socket: connectedUserSocketId,
+      activity: 'puzzle',
+    }
+    console.log(activityDataToSend)
+    sendActivity(activityDataToSend)
+    dispatch(setActivity(activityDataToSend))
   }
 
   const handleBookClicked = () => {
-    console.log('handling book clicked')
-    // setSelectedActivity('book')
-    sendActivity('book')
+    let activityDataToSend = {
+      socket: connectedUserSocketId,
+      activity: 'book',
+    }
+    console.log(activityDataToSend)
+    sendActivity(activityDataToSend)
+    dispatch(setActivity(activityDataToSend))
   }
   return (
     <>

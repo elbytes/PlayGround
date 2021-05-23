@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Chess from 'chess.js'
 import Chessboard from 'chessboardjsx'
-import { sendMove, sendGameState } from '../../utils/wsConn/wsConn'
+import {
+  sendMove,
+  sendGameState,
+  dropOpponentMove,
+} from '../../utils/wsConn/wsConn'
 import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
 function ChessGame() {
   const [fen, setFen] = useState('start')

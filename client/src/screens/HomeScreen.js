@@ -36,9 +36,8 @@ const HomeScreen = ({ location, history }) => {
   return (
     <>
       <h1>HomeScreen</h1>
-      <div className='home'>
+      <div className='home container-md'>
         <h2>Welcome {userInfo.name}</h2>
-        {/* <Contacts /> */}
         <NicknameLogin username={username} setUsername={setUsername} />
       </div>
     </>

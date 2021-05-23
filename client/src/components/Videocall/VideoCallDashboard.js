@@ -11,6 +11,7 @@ import ChessIndex from '../Chess/ChessIndex'
 import PuzzleIndex from '../puzzle/PuzzleIndex'
 import BookIndex from '../Books/BookIndex'
 import ActivityListScreen from '../../screens/ActivityListScreen'
+import { StartingActivity } from '../StartingActivity'
 import { callStates } from '../../constants/callConstants'
 
 const styles = {
@@ -24,11 +25,11 @@ const styles = {
 }
 const VideoCallDashboard = ({ id }) => {
   const selectedActivity = useSelector((state) => state.call.activity)
-
+  console.log(selectedActivity)
   useEffect(() => {
     webRTCHandler.getLocalStream()
     return () => {}
-  }, [selectedActivity])
+  }, [])
 
   return (
     <div className='home'>
@@ -37,20 +38,24 @@ const VideoCallDashboard = ({ id }) => {
         <Row style={styles.verticalMArgin}>
           <Col>
             <div className='border'>
-              <ChessIndex />
+              {selectedActivity.activity === 'chess' && <ChessIndex />}
+              {selectedActivity.activity === 'draw' && <CanvasIndex />}
+              {selectedActivity.activity === 'book' && <BookIndex />}
+              {selectedActivity.activity === 'puzzle' && <PuzzleIndex />}
+              {selectedActivity.activity === '' && <StartingActivity />}
             </div>
           </Col>
           <Col>
             <Row style={styles.verticalMArgin}>
               <Col>
-                <div className='border'>
-                  <VideoCallDisplay />
-                </div>
+                <ActivityListScreen />
               </Col>
             </Row>
             <Row style={styles.verticalMArgin}>
               <Col>
-                <ActivityListScreen />
+                <div className='border'>
+                  <VideoCallDisplay />
+                </div>
               </Col>
             </Row>
           </Col>

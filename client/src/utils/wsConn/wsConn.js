@@ -3,6 +3,7 @@ import { fabric } from 'fabric'
 import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
+import Chessboard from 'chessboardjsx'
 const SERVER = 'http://localhost:5000'
 
 const broadcastEventTypes = {
@@ -56,16 +57,16 @@ export const connectWithWebSocket = () => {
   })
 
   //listener for activity selected
-  socket.on('activity', (activity) => {
-    console.log('received activity selected from server', activity)
-    webRTCHandler.handleActivitySelected(activity)
+  socket.on('activity', (data) => {
+    console.log('received activity selected from server', data)
+    webRTCHandler.handleActivitySelected(data)
   })
 
   //listeners for chess
-  socket.on('move', (data) => {
-    console.log('received data back from server', data)
-    webRTCHandler.sendReceivedChessMoveToBoard(data) //to store
-  })
+  // socket.on('move', (data) => {
+  //   console.log('received data back from server', data)
+  //   webRTCHandler.sendReceivedChessMoveToBoard(data) //to store
+  // })
 
   socket.on('game-state', (data) => {
     console.log('received data back from server', data)
@@ -135,14 +136,23 @@ const handleBroadcastEvents = (data) => {
 }
 
 //emit event for activity selected
-export const sendActivity = (activity) => {
-  socket.emit('activity', activity)
+export const sendActivity = (data) => {
+  socket.emit('activity', data)
   console.log('emitting activity event to server')
 }
+
 //emitting events to server for chessboard
 export const sendMove = (move) => {
   socket.emit('move', move)
-  console.log('emitting move event')
+  console.log('emitting move event', move)
+}
+
+//render opponent move on listener
+export const dropOpponentMove = () => {
+  socket.on('move', (data) => {
+    console.log('received move back from server', data)
+    // onDrop(data)
+  })
 }
 
 export const sendGameState = (gameState) => {

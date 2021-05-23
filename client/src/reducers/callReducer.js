@@ -5,7 +5,6 @@ const initState = {
   callState: callActions.callStates.CALL_UNAVAILABLE,
   callingDialogueVisibile: false,
   callerUsername: '',
-  callee: '',
   callRejected: {
     rejected: false,
     reason: '',
@@ -17,7 +16,10 @@ const initState = {
     received: false,
     content: '',
   },
-  activity: '',
+  activity: {
+    socket: '',
+    activity: '',
+  },
 }
 
 export const callReducer = (state = initState, action) => {
@@ -31,8 +33,6 @@ export const callReducer = (state = initState, action) => {
       return { ...state, callingDialogueVisibile: action.visibile }
     case callActions.CALL_SET_CALLER_USERNAME:
       return { ...state, callerUsername: action.callerUsername }
-    case callActions.CALL_SET_CALLEE:
-      return { ...state, callee: action.callee }
     case callActions.CALL_SET_CALL_REJECTED:
       return { ...state, callRejected: action.callRejected }
     case callActions.CALL_SET_REMOTE_STREAM:
@@ -45,6 +45,7 @@ export const callReducer = (state = initState, action) => {
     case callActions.CALL_SET_CHAT_MESSAGE: {
       return { ...state, message: action.message }
     }
+    //activity cases:
     case callActions.CALL_SET_ACTIVITY: {
       return { ...state, activity: action.activity }
     }

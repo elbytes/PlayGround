@@ -119,9 +119,10 @@ io.on('connection', (socket) => {
   })
 
   //listener for activity selected
-  socket.on('activity', (activity) => {
-    console.log('received activity choice on server')
-    socket.broadcast.emit('activity', activity)
+  socket.on('activity', (data) => {
+    console.log('received activity choice on server', data)
+    io.to(data.socket).emit('activity', data)
+    console.log('sending selected activity to second client', data)
   })
 
   //listeners for canvas
@@ -135,12 +136,13 @@ io.on('connection', (socket) => {
   })
 
   socket.on('object-added', (data) => {
-    socket.broadcast.emit('new-add', data)
+    io.to(data.socket).emit('new-add', data.object)
     console.log('receiving add shape event in server')
   })
 
   socket.on('object-modified', (data) => {
-    socket.broadcast.emit('new-modification', data)
+    io.to(data.socket).emit('new-modification', data.drawData)
+    console.log('receiving modify shape event in server')
   })
 
   //listeners for chess

@@ -1,14 +1,19 @@
 import React from 'react'
 
-import { Form } from 'react-bootstrap'
+import { Form, Card, Button } from 'react-bootstrap'
 const NicknameInput = (props) => {
   const { username, setUsername } = props
 
+  const styles = {
+    margin: {
+      marginTop: '1rem',
+    },
+  }
   return (
     <div>
-      <p>Choose a nickname or log in with your username</p>
       <Form.Group>
         <Form.Control
+          style={styles.margin}
           size='lg'
           type='text'
           value={username}

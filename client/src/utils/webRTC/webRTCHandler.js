@@ -257,7 +257,7 @@ export const sendReceivedChessMoveToBoard = (data) => {
 }
 
 export const handleGameStateChange = (data) => {
-  store.dispatch(setGameStateChange(data))
+  store.dispatch(setGameStateChange(data.gameState))
 }
 
 //function that deasl with the draw data received from server

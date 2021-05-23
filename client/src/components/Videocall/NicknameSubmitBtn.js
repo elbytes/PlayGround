@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap'
 
 const styles = {
   btn: {
-    margin: '3rem',
+    marginLeft: '1rem',
   },
   btnContainer: {
     alignItems: 'center',
