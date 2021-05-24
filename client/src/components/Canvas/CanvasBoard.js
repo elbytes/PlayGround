@@ -1,16 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fabric } from 'fabric'
-import {
-  BsFillTriangleFill,
-  BsFillCircleFill,
-  BsFillSquareFill,
-  BsBrush,
-} from 'react-icons/bs'
-import { FaEraser } from 'react-icons/fa'
 import { v1 as uuid } from 'uuid'
 import { setDrawDataAction } from '../../actions/canvasActions'
-import { sendDraw } from '../../utils/wsConn/wsConn'
+import { emitErase, eraseBoard, sendDraw } from '../../utils/wsConn/wsConn'
 import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
 import {
   emitAdd,
@@ -20,16 +13,19 @@ import {
 } from '../../utils/wsConn/wsConn'
 const styles = {
   canvasBoard: {
-    width: '90%',
-    height: '90%',
+    width: '100%',
+    height: '100%',
     backgroundColor: '#FFF',
     margin: 'auto',
-    border: '1px solid',
+    border: '2px solid',
     borderRadius: '8px',
+    borderColor: '#5daffb',
+    padding: '1rem',
   },
   btn: {
     border: 'none',
     borderRadius: '2px',
+    backgroundColor: 'white',
   },
 }
 
@@ -37,11 +33,16 @@ const CanvasBoard = (props) => {
   const [canvas, setCanvas] = useState('')
   //receive selected color from color picker > store
   const color = useSelector((state) => state.canvas.color)
+  let ctx
+  let prevX = 0
+  let currX = 0
+  let prevY = 0
+  let currY = 0
 
   const initCanvas = () =>
     new fabric.Canvas('canv', {
       height: 500,
-      width: 500,
+      width: 700,
       backgroundColor: 'white',
     })
 
@@ -94,13 +95,13 @@ const CanvasBoard = (props) => {
       object = new fabric.Rect({
         height: 75,
         width: 150,
-        fill: { color },
+        fill: color,
       })
       console.log('new rect created')
     } else if (type === 'triangle') {
-      object = new fabric.Triangle({ width: 100, height: 100 })
+      object = new fabric.Triangle({ width: 100, height: 100, fill: color })
     } else if (type === 'circle') {
-      object = new fabric.Circle({ radius: 50 })
+      object = new fabric.Circle({ radius: 50, fill: color })
     }
 
     //set an id property on the object
@@ -115,34 +116,42 @@ const CanvasBoard = (props) => {
     emitAdd(drawDataToSend)
   }
 
-  const drawBrush = () => {
-    canvas.freeDrawingBrush.color = color
-    canvas.freeDrawingBrush.width = 10
-    canvas.renderAll()
+  function drawBrush() {
+    ctx = canvas.getContext('2d')
+    ctx.beginPath()
+    ctx.moveTo(prevX, prevY)
+    ctx.lineTo(currX, currY)
+    ctx.strokeStyle = color
+    ctx.lineWidth = 5
+    ctx.stroke()
+    ctx.closePath()
   }
 
   const erase = () => {
     canvas.clear()
+    let eraseObjectToSend = { canvas: canvas, socket: connectedUserSocketId }
+    emitErase(eraseObjectToSend)
+    eraseBoard(canvas)
   }
   return (
     <div>
-      <span>canvas board component</span>
-      <div className={styles.canvasBoard}>
+      <div>
         <button
           type='button'
           name='circleBrush'
-          className={styles.btn}
+          style={styles.btn}
           onClick={drawBrush}
         >
           brush
         </button>
+
         <button
           type='button'
           name='rectangle'
           style={styles.btn}
           onClick={addShape}
         >
-          square
+          rect
         </button>
         <button
           type='button'
@@ -164,7 +173,7 @@ const CanvasBoard = (props) => {
         <button style={styles.btn} type='button' name='erase' onClick={erase}>
           erase
         </button>
-        <canvas id='canv'></canvas>
+        <canvas id='canv' style={styles.canvasBoard}></canvas>
       </div>
     </div>
   )

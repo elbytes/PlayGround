@@ -3,7 +3,7 @@ import './CallingDialogue.css'
 const CallingDialogue = () => {
   return (
     <div className='direct_call'>
-      <span>Calling...</span>
+      <h3>Calling...</h3>
     </div>
   )
 }

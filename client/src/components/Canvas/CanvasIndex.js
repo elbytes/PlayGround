@@ -9,7 +9,7 @@ export const CanvasIndex = () => {
 
   return (
     <div>
-      <span>Canvas Component</span>
+      <h2>Whiteboard</h2>
       <ColorPicker onColorPicked={onColorPicked} />
       <CanvasBoard onColorPicked={onColorPicked} />
     </div>

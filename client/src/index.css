@@ -1,16 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 html {
   height: 100%;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
   min-height: 100%;
   width: 100%;
   margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+p,
+button {
+  font-family: 'Poppins', sans-serif;
 }
 .logo {
-  font-family: 'Balsamiq Sans', cursive;
-  font-family: 'Galindo', cursive;
-  font-family: 'Mitr', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 900;
   font-size: 1.5rem;
   text-transform: none !important;
   font-weight: initial;
@@ -18,6 +34,7 @@ body {
 
 main {
   min-height: 80vh;
+  font-family: 'Poppins', sans-serif;
 }
 
 .text-black {

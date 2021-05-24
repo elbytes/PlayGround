@@ -3,7 +3,7 @@ import { fabric } from 'fabric'
 import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
-import Chessboard from 'chessboardjsx'
+import Chess from 'chess.js'
 const SERVER = 'http://localhost:5000'
 
 const broadcastEventTypes = {
@@ -148,10 +148,13 @@ export const sendMove = (move) => {
 }
 
 //render opponent move on listener
-export const dropOpponentMove = () => {
+export const dropOpponentMove = (game) => {
   socket.on('move', (data) => {
     console.log('received move back from server', data)
-    // onDrop(data)
+    let sourceSquare = data.from
+    let targetSquare = data.to
+    let opponentMove = game.current.move({ sourceSquare, targetSquare })
+    game.current.fen()
   })
 }
 
@@ -174,6 +177,10 @@ export const emitAdd = (obj) => {
 //shape modify event for canvas
 export const emitModify = (obj) => {
   socket.emit('object-modified', obj)
+}
+
+export const emitErase = (data) => {
+  socket.emit('erase', data)
 }
 
 //adding object on listener for add new shape
@@ -216,6 +223,15 @@ export const modifyObj = (canvas) => {
         canvas.renderAll()
       }
     })
+  })
+}
+
+//erasing canvas board on listener for erase
+export const eraseBoard = (canvas) => {
+  console.log('erase board running before on')
+  socket.on('erase', () => {
+    console.log('erase board running after on')
+    canvas.clear()
   })
 }
 

@@ -28,7 +28,6 @@ function ColorPicker(props) {
 
   return (
     <div>
-      <span>Color picker component</span>
       <br />
       <Button onClick={togglePicker} style={styles.colorPickerBtn}>
         Colors

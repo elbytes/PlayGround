@@ -48,13 +48,16 @@ function ChessGame() {
     if (move === null) return
     //fen string
     setFen(game.current.fen())
+    //send move to server
     let dataToSend = { socket: connectedUserSocketId, move: move }
     console.log(dataToSend)
     sendMove(dataToSend)
+    dropOpponentMove(game)
+    setFen(game.current.fen())
+    console.log(fen)
   }
 
   const onDropFromStore = () => {
-    console.log('is this running')
     console.log('opponentMove from ChessGame', opponentMove.to)
     let sourceSquare = opponentMove.from
     let targetSquare = opponentMove.to

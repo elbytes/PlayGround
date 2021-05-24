@@ -145,6 +145,11 @@ io.on('connection', (socket) => {
     console.log('receiving modify shape event in server')
   })
 
+  socket.on('erase', (data) => {
+    console.log('received erase event on server', data)
+    io.to(data.socket).emit('erase', data.canvas)
+  })
+
   //listeners for chess
   socket.on('move', (data) => {
     io.to(data.socket).emit('move', data.move)
