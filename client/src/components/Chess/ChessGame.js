@@ -11,20 +11,25 @@ import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
 function ChessGame() {
   const [fen, setFen] = useState('start')
   const [gameState, setGameState] = useState('inProgress')
+  let opponentMove = ''
+  opponentMove = useSelector((state) => state.chess.opponentMove)
 
-  const opponentMove = useSelector((state) => state.chess.opponentMove)
-  console.log(opponentMove)
   let game = useRef(null)
-  const dispatch = useDispatch()
 
   useEffect(() => {
     game.current = new Chess()
   }, [])
 
+  useEffect(() => {
+    console.log('use effect ran')
+    onDropFromStore(opponentMove)
+  }, [opponentMove])
+
   let gameStateDataToSend = {
     socket: connectedUserSocketId,
     gameState: gameState,
   }
+
   if (game.current && game.current.in_check()) {
     setGameState('inCheck')
     sendGameState(gameStateDataToSend)
@@ -41,6 +46,7 @@ function ChessGame() {
     setGameState('stalemate')
     sendGameState(gameStateDataToSend)
   }
+
   const onDrop = ({ sourceSquare, targetSquare }) => {
     let move = game.current.move({ from: sourceSquare, to: targetSquare })
     //check legal moves
@@ -52,12 +58,13 @@ function ChessGame() {
     let dataToSend = { socket: connectedUserSocketId, move: move }
     console.log(dataToSend)
     sendMove(dataToSend)
-    dropOpponentMove(game)
+
     setFen(game.current.fen())
     console.log(fen)
   }
 
-  const onDropFromStore = () => {
+  const onDropFromStore = (opponentMove) => {
+    if (!opponentMove) return
     console.log('opponentMove from ChessGame', opponentMove.to)
     let sourceSquare = opponentMove.from
     let targetSquare = opponentMove.to

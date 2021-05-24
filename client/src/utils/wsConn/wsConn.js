@@ -63,10 +63,10 @@ export const connectWithWebSocket = () => {
   })
 
   //listeners for chess
-  // socket.on('move', (data) => {
-  //   console.log('received data back from server', data)
-  //   webRTCHandler.sendReceivedChessMoveToBoard(data) //to store
-  // })
+  socket.on('move', (data) => {
+    console.log('received data back from server', data)
+    webRTCHandler.sendReceivedChessMoveToBoard(data) //to store
+  })
 
   socket.on('game-state', (data) => {
     console.log('received data back from server', data)
@@ -153,7 +153,7 @@ export const dropOpponentMove = (game) => {
     console.log('received move back from server', data)
     let sourceSquare = data.from
     let targetSquare = data.to
-    let opponentMove = game.current.move({ sourceSquare, targetSquare })
+    game.current.move({ sourceSquare, targetSquare })
     game.current.fen()
   })
 }
