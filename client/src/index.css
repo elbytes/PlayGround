@@ -110,3 +110,7 @@ main {
 .container-md {
   max-width: 60%;
 }
+
+.container-landing {
+  min-width: 100%;
+}

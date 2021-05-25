@@ -58,7 +58,6 @@ function ChessGame() {
     let dataToSend = { socket: connectedUserSocketId, move: move }
     console.log(dataToSend)
     sendMove(dataToSend)
-
     setFen(game.current.fen())
     console.log(fen)
   }
@@ -80,7 +79,6 @@ function ChessGame() {
 
   return (
     <div>
-      <button onClick={onDropFromStore}>Run opponentMove</button>
       {game.current && game.current.game_over() ? (
         <div>
           <span>game over</span>

@@ -11,6 +11,7 @@ import {
   addObj,
   modifyObj,
 } from '../../utils/wsConn/wsConn'
+
 const styles = {
   canvasBoard: {
     width: '100%',
@@ -33,11 +34,7 @@ const CanvasBoard = (props) => {
   const [canvas, setCanvas] = useState('')
   //receive selected color from color picker > store
   const color = useSelector((state) => state.canvas.color)
-  let ctx
-  let prevX = 0
-  let currX = 0
-  let prevY = 0
-  let currY = 0
+  const canvasRef = useRef(null)
 
   const initCanvas = () =>
     new fabric.Canvas('canv', {
@@ -95,7 +92,7 @@ const CanvasBoard = (props) => {
       object = new fabric.Rect({
         height: 75,
         width: 150,
-        fill: color,
+        fill: 'black',
       })
       console.log('new rect created')
     } else if (type === 'triangle') {
@@ -116,17 +113,6 @@ const CanvasBoard = (props) => {
     emitAdd(drawDataToSend)
   }
 
-  function drawBrush() {
-    ctx = canvas.getContext('2d')
-    ctx.beginPath()
-    ctx.moveTo(prevX, prevY)
-    ctx.lineTo(currX, currY)
-    ctx.strokeStyle = color
-    ctx.lineWidth = 5
-    ctx.stroke()
-    ctx.closePath()
-  }
-
   const erase = () => {
     canvas.clear()
     let eraseObjectToSend = { canvas: canvas, socket: connectedUserSocketId }
@@ -140,7 +126,7 @@ const CanvasBoard = (props) => {
           type='button'
           name='circleBrush'
           style={styles.btn}
-          onClick={drawBrush}
+          // onClick={}
         >
           brush
         </button>
@@ -173,7 +159,7 @@ const CanvasBoard = (props) => {
         <button style={styles.btn} type='button' name='erase' onClick={erase}>
           erase
         </button>
-        <canvas id='canv' style={styles.canvasBoard}></canvas>
+        <canvas ref={canvasRef} id='canv' style={styles.canvasBoard}></canvas>
       </div>
     </div>
   )

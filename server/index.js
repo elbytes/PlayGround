@@ -137,7 +137,7 @@ io.on('connection', (socket) => {
 
   socket.on('object-added', (data) => {
     io.to(data.socket).emit('new-add', data.object)
-    console.log('receiving add shape event in server')
+    console.log('receiving add shape event in server', data.object)
   })
 
   socket.on('object-modified', (data) => {
@@ -159,6 +159,12 @@ io.on('connection', (socket) => {
   socket.on('game-state', (data) => {
     io.to(data.socket).emit('game-state', data.gameState)
     console.log('game state data received from chess client')
+  })
+
+  //listeners for book
+  socket.on('book-open', (data) => {
+    console.log('received book open data on server', data)
+    io.to(data.socket).emit('book-open', data.data)
   })
 })
 

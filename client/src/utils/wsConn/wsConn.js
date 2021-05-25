@@ -81,6 +81,11 @@ export const connectWithWebSocket = () => {
   socket.on('new-add', (data) => {
     //
   })
+
+  //listeners for book
+  socket.on('book-open', (data) => {
+    console.log('received book data back from server')
+  })
 }
 
 //registering a user after log in in array of active users
@@ -148,15 +153,15 @@ export const sendMove = (move) => {
 }
 
 //render opponent move on listener
-export const dropOpponentMove = (game) => {
-  socket.on('move', (data) => {
-    console.log('received move back from server', data)
-    let sourceSquare = data.from
-    let targetSquare = data.to
-    game.current.move({ sourceSquare, targetSquare })
-    game.current.fen()
-  })
-}
+// export const dropOpponentMove = (game) => {
+//   socket.on('move', (data) => {
+//     console.log('received move back from server', data)
+//     let sourceSquare = data.from
+//     let targetSquare = data.to
+//     game.current.move({ sourceSquare, targetSquare })
+//     game.current.fen()
+//   })
+// }
 
 export const sendGameState = (gameState) => {
   socket.emit('game-state', gameState)
@@ -186,14 +191,15 @@ export const emitErase = (data) => {
 //adding object on listener for add new shape
 export const addObj = (canvas) => {
   socket.on('new-add', (data) => {
-    console.log('receiving an add object event')
+    console.log('receiving an add object event', data)
     const { obj, id } = data
     let object
-
+    console.log(obj)
     if (obj.type === 'rect') {
       object = new fabric.Rect({
         height: obj.height,
         width: obj.width,
+        color: obj.fill,
       })
     } else if (obj.type === 'circle') {
       object = new fabric.Circle({
@@ -233,6 +239,12 @@ export const eraseBoard = (canvas) => {
     console.log('erase board running after on')
     canvas.clear()
   })
+}
+
+//book emit events
+export const emitOpenBook = (data) => {
+  socket.emit('book-open', data)
+  console.log('sending open book data to server')
 }
 
 export { mySocketId }

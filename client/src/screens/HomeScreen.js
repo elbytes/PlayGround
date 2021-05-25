@@ -4,7 +4,7 @@ import { getUserHome, login } from '../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { USER_HOME_FAIL, USER_HOME_SUCCESS } from '../constants/userConstants'
 import { connectWithWebSocket, registerNewUser } from '../utils/wsConn/wsConn'
-import Contacts from '../components/Contacts/Contacts'
+
 import ActivityListScreen from '../screens/ActivityListScreen'
 import Dashboard from '../components/Dashboard'
 import NicknameLogin from '../components/Videocall/NicknameLogin'
