@@ -5,9 +5,6 @@ import {
   MdMicOff,
   MdVideocam,
   MdVideocamOff,
-  MdVideoLabel,
-  MdVideoCall,
-  MdCamera,
 } from 'react-icons/md'
 import ConversationBtn from './ConversationBtn'
 import { hangUp } from '../../../utils/webRTC/webRTCHandler'

@@ -7,7 +7,6 @@ import FormContainer from '../components/FormContainer'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import sidePicture from '../images/002.jpg'
-import { registerNewUser } from '../utils/wsConn/wsConn'
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')

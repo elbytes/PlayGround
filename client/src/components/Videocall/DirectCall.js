@@ -75,7 +75,12 @@ const DirectCall = (props) => {
       </Row>
       <Row>
         <Col>
-          <Chat setDirectCallMessage={setDirectCallMessage} message={message} />
+          {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
+            <Chat
+              setDirectCallMessage={setDirectCallMessage}
+              message={message}
+            />
+          )}
         </Col>
       </Row>
     </>

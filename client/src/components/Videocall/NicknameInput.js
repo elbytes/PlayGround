@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Form, Card, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 const NicknameInput = (props) => {
   const { username, setUsername } = props
 

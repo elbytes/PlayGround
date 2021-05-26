@@ -5,9 +5,8 @@ import {
   setRemoteStream,
   setMessage,
   setActivity,
-  setDrawData,
 } from '../../actions/callActions'
-import { setDrawDataAction } from '../../actions/canvasActions'
+
 import {
   setReceivedMoved,
   setGameStateChange,
@@ -19,7 +18,6 @@ import {
 } from '../../reducers/callReducer'
 import store from '../../store'
 import * as wss from '../wsConn/wsConn'
-import { fabric } from 'fabric'
 
 const preOfferAnswers = {
   CALL_ACCEPTED: 'CALL_ACCEPTED',
@@ -257,7 +255,7 @@ export const sendReceivedChessMoveToBoard = (data) => {
 }
 
 export const handleGameStateChange = (data) => {
-  store.dispatch(setGameStateChange(data.gameState))
+  store.dispatch(setGameStateChange(data))
 }
 
 //function that deasl with the draw data received from server

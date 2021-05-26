@@ -1,18 +1,13 @@
-import { LinkContainer, Image } from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import React, { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faIndent } from '@fortawesome/free-solid-svg-icons'
 import logo from '../images/logo512.png'
-import {
-  Nav,
-  Navbar,
-  Button,
-  Container,
-  NavDropdown,
-  Col,
-} from 'react-bootstrap'
+import { Nav, Navbar, Button, NavDropdown } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
-
+const styles = {
+  btn: { fontFamily: 'Prompt' },
+}
 const Header = () => {
   const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
@@ -56,7 +51,11 @@ const Header = () => {
             ) : (
               <LinkContainer to='/login'>
                 <Nav.Link>
-                  <Button variant='warning' className='text-black'>
+                  <Button
+                    variant='warning'
+                    className='text-black'
+                    style={styles.btn}
+                  >
                     Sign In
                   </Button>
                 </Nav.Link>

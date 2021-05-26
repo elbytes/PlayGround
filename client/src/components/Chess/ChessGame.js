@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { Alert } from 'react-bootstrap'
 import Chess from 'chess.js'
 import Chessboard from 'chessboardjsx'
-import {
-  sendMove,
-  sendGameState,
-  dropOpponentMove,
-} from '../../utils/wsConn/wsConn'
+import { sendMove, sendGameState } from '../../utils/wsConn/wsConn'
 import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
 function ChessGame() {
   const [fen, setFen] = useState('start')
-  const [gameState, setGameState] = useState('inProgress')
+  // const [gameState, setGameState] = useState('inProgress')
+  const gameState = useSelector((state) => state.chess.gameState)
   let opponentMove = ''
   opponentMove = useSelector((state) => state.chess.opponentMove)
 
@@ -21,7 +19,6 @@ function ChessGame() {
   }, [])
 
   useEffect(() => {
-    console.log('use effect ran')
     onDropFromStore(opponentMove)
   }, [opponentMove])
 
@@ -31,19 +28,15 @@ function ChessGame() {
   }
 
   if (game.current && game.current.in_check()) {
-    setGameState('inCheck')
     sendGameState(gameStateDataToSend)
   }
   if (game.current && game.current.in_checkmate()) {
-    setGameState('inCheckmate')
     sendGameState(gameStateDataToSend)
   }
   if (game.current && game.current.in_draw()) {
-    setGameState('inDraw')
     sendGameState(gameStateDataToSend)
   }
   if (game.current && game.current.in_stalemate()) {
-    setGameState('stalemate')
     sendGameState(gameStateDataToSend)
   }
 
@@ -59,7 +52,6 @@ function ChessGame() {
     console.log(dataToSend)
     sendMove(dataToSend)
     setFen(game.current.fen())
-    console.log(fen)
   }
 
   const onDropFromStore = (opponentMove) => {
@@ -85,38 +77,46 @@ function ChessGame() {
           <button onClick={resetGame}>Play Again</button>
         </div>
       ) : (
-        <div>
-          <span>Game</span>
-        </div>
+        <></>
       )}
       {game.current && game.current.in_check() ? (
         <div>
-          <span>CHECKED</span>
+          <Alert variant='danger'>CHECKED</Alert>
         </div>
       ) : (
-        <span></span>
+        <></>
       )}
       {game.current && game.current.in_checkmate() ? (
         <div>
-          <span>CHECKMATE</span>
+          <Alert variant='danger'>CHECKMATE</Alert>
         </div>
       ) : (
-        <span></span>
+        <></>
       )}
       {game.current && game.current.in_draw() ? (
         <div>
-          <span>DRAW</span>
+          <Alert variant='danger'>DRAW</Alert>
         </div>
       ) : (
-        <span></span>
+        <></>
       )}
       {game.current && game.current.in_stalemate() ? (
         <div>
-          <span>STALEMATE</span>
+          <Alert variant='danger'>STALEMATE</Alert>
         </div>
       ) : (
-        <span></span>
+        <></>
       )}
+      <div>
+        <h5>
+          {game.current && game.current.turn() === 'b' ? (
+            <h4>It's Black turn</h4>
+          ) : (
+            <h4>It's White turn</h4>
+          )}
+        </h5>
+        {}
+      </div>
       <Chessboard
         position={fen}
         onDrop={onDrop}

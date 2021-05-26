@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { sendMessageUsingDataChannel } from '../../utils/webRTC/webRTCHandler'
 import MessageDisplay from '../Chat/MessageDisplay'
@@ -18,30 +18,12 @@ const styles = {
 }
 function Chat({ message, setDirectCallMessage }) {
   const [inputValue, setInputValue] = useState('')
-  const [isTyping, setIsTyping] = useState(false)
-
-  const handleOnKeyDown = (e) => {
-    setIsTyping(true)
-  }
-  const handleOnKeyUp = (e) => {
-    setTimeout(() => {
-      setIsTyping(false)
-    }, 1000)
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     sendMessageUsingDataChannel(inputValue)
     setInputValue('')
   }
-
-  // useEffect(() => {
-  //   if (message.received) {
-  //     setTimeout(() => {
-  //       setDirectCallMessage(false, '')
-  //     }, [2000])
-  //   }
-  // }, [])
 
   return (
     <>
@@ -60,8 +42,6 @@ function Chat({ message, setDirectCallMessage }) {
                 onChange={(e) => {
                   setInputValue(e.target.value)
                 }}
-                onKeyDown={handleOnKeyDown}
-                onKeyUp={handleOnKeyUp}
                 placeholder='Type your message'
               />
             </Form.Group>
@@ -70,11 +50,6 @@ function Chat({ message, setDirectCallMessage }) {
             <Button style={styles.chatBtn} variant='danger' type='submit'>
               Send
             </Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {isTyping && <span style={styles.typing}>friend is typing...</span>}
           </Col>
         </Row>
       </Form>

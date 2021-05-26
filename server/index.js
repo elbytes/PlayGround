@@ -118,6 +118,11 @@ io.on('connection', (socket) => {
     io.to(data.connectedUserSocketId).emit('user-hanged-up')
   })
 
+  socket.on('typing', (data) => {
+    console.log('received user-typing on server', data)
+    io.to(data.socket).emit('typing', data.typing)
+  })
+
   //listener for activity selected
   socket.on('activity', (data) => {
     console.log('received activity choice on server', data)
@@ -158,7 +163,12 @@ io.on('connection', (socket) => {
 
   socket.on('game-state', (data) => {
     io.to(data.socket).emit('game-state', data.gameState)
-    console.log('game state data received from chess client')
+    console.log('game state data received from chess client', data)
+  })
+
+  socket.on('turn', (data) => {
+    io.to(data.socket).emit('turn', data.turn)
+    console.log('received turn on server', data.turn)
   })
 
   //listeners for book

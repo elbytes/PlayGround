@@ -10,7 +10,6 @@ import {
   CALL_SET_CHAT_MESSAGE,
   CALL_SET_ACTIVITY,
 } from '../constants/callConstants'
-import callStates from '../constants/callConstants'
 
 //call action creators
 export const setLocalStream = (localStream) => {

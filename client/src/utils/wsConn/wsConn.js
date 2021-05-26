@@ -3,7 +3,7 @@ import { fabric } from 'fabric'
 import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
-import Chess from 'chess.js'
+
 const SERVER = 'http://localhost:5000'
 
 const broadcastEventTypes = {
@@ -72,6 +72,7 @@ export const connectWithWebSocket = () => {
     console.log('received data back from server', data)
     webRTCHandler.handleGameStateChange(data)
   })
+
   //listerner for canvas drawing
   socket.on('draw', (data) => {
     console.log('receiving draw data back from server', data)
@@ -127,6 +128,11 @@ export const sendUserHangedUp = (data) => {
   console.log('emmitting user-hanged-up')
 }
 
+export const emitTyping = (data) => {
+  socket.emit('typing', data)
+  console.log('emitting typing data', data)
+}
+
 const handleBroadcastEvents = (data) => {
   switch (data.event) {
     case broadcastEventTypes.ACTIVE_USERS:
@@ -151,17 +157,6 @@ export const sendMove = (move) => {
   socket.emit('move', move)
   console.log('emitting move event', move)
 }
-
-//render opponent move on listener
-// export const dropOpponentMove = (game) => {
-//   socket.on('move', (data) => {
-//     console.log('received move back from server', data)
-//     let sourceSquare = data.from
-//     let targetSquare = data.to
-//     game.current.move({ sourceSquare, targetSquare })
-//     game.current.fen()
-//   })
-// }
 
 export const sendGameState = (gameState) => {
   socket.emit('game-state', gameState)

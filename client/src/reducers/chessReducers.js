@@ -5,7 +5,8 @@ import {
 
 const initialState = {
   opponentMove: '',
-  gameState: '',
+  gameState: 'inProgress',
+  turn: 'w',
 }
 
 export const chessReducer = (state = initialState, action) => {

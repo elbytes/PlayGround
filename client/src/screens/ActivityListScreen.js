@@ -1,6 +1,6 @@
-import { Row, Col, Container, Card } from 'react-bootstrap'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { Row, Col } from 'react-bootstrap'
+
+import { useDispatch } from 'react-redux'
 import { setActivity } from '../actions/callActions'
 import { FaPaintBrush, FaChessKnight, FaBook } from 'react-icons/fa'
 import { BsPuzzleFill } from 'react-icons/bs'

@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Route } from 'react-router-dom'
-import { getUserHome, login } from '../actions/userActions'
+import { getUserHome } from '../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
-import { USER_HOME_FAIL, USER_HOME_SUCCESS } from '../constants/userConstants'
+import { USER_HOME_SUCCESS } from '../constants/userConstants'
 import { connectWithWebSocket, registerNewUser } from '../utils/wsConn/wsConn'
-
-import ActivityListScreen from '../screens/ActivityListScreen'
-import Dashboard from '../components/Dashboard'
 import NicknameLogin from '../components/Videocall/NicknameLogin'
 
 const HomeScreen = ({ location, history }) => {
   const dispatch = useDispatch()
   const userHome = useSelector((state) => state.userHome)
-  const { loading, error, user } = userHome
+  const { user } = userHome
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const [username, setUsername] = useState()
@@ -35,8 +31,7 @@ const HomeScreen = ({ location, history }) => {
 
   return (
     <>
-      <h1>HomeScreen</h1>
-      <div className='home container-md'>
+      <div className='home container-md' sm={12} md={12}>
         <h2>Welcome {userInfo.name}</h2>
         <NicknameLogin username={username} setUsername={setUsername} />
       </div>

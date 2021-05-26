@@ -1,6 +1,6 @@
 import React from 'react'
 import ColorPicker from './ColorPicker'
-import CanvasBoard from './CanvasBoard'
+import FabricCanvasBoard from './FabricCanvasBoard'
 
 export const CanvasIndex = () => {
   const onColorPicked = (hex) => {
@@ -11,7 +11,7 @@ export const CanvasIndex = () => {
     <div>
       <h2>Whiteboard</h2>
       <ColorPicker onColorPicked={onColorPicked} />
-      <CanvasBoard onColorPicked={onColorPicked} />
+      <FabricCanvasBoard onColorPicked={onColorPicked} />
     </div>
   )
 }

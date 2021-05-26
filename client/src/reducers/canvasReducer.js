@@ -1,7 +1,7 @@
 import { CANVAS_SET_DRAW } from '../constants/canvasConstants'
 import { CANVAS_SET_COLOR } from '../constants/canvasConstants'
 const initState = {
-  color: '',
+  color: 'black',
 }
 
 export const canvasReducer = (state = initState, action) => {

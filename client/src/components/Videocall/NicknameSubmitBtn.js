@@ -7,6 +7,7 @@ const styles = {
   },
   btnContainer: {
     alignItems: 'center',
+    fontFamily: 'Prompt',
   },
 }
 
