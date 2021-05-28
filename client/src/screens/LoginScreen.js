@@ -6,7 +6,6 @@ import { login } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import sidePicture from '../images/002.jpg'
 
 const styles = {
   img: { width: '305px' },
@@ -93,9 +92,6 @@ const LoginScreen = ({ location, history }) => {
             </Card>
           </FormContainer>
         </div>
-        {/* <div lg={6} sm={12} xs={12} md={6}>
-          <Image src={sidePicture} responsive style={styles.img} />
-        </div> */}
       </Col>
     </Row>
   )

@@ -1,0 +1,42 @@
+Date : 2021-05-28 14:50:14
+Directory : /home/elbytes/Documents/projects/PlayGround_dev/server
+Total : 11 files,  20437 codes, 35 comments, 78 blanks, all 20550 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| JSON             |          2 |     20,042 |          0 |          2 |     20,044 |
+| TypeScript React |          9 |        395 |         35 |         76 |        506 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                  | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                     |         11 |     20,437 |         35 |         78 |     20,550 |
+| config                                                                                |          1 |         18 |          0 |          4 |         22 |
+| controllers                                                                           |          1 |        113 |         18 |         16 |        147 |
+| middlewares                                                                           |          2 |         36 |          5 |          7 |         48 |
+| models                                                                                |          1 |         45 |          3 |          8 |         56 |
+| routes                                                                                |          1 |         20 |          0 |          3 |         23 |
+| utils                                                                                 |          2 |         13 |          0 |          7 |         20 |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                              | language         | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| /home/elbytes/Documents/projects/PlayGround_dev/server/config/db.js                   | TypeScript React |         18 |          0 |          4 |         22 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/controllers/userController.js  | TypeScript React |        113 |         18 |         16 |        147 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/index.js                       | TypeScript React |        150 |          9 |         31 |        190 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/middlewares/authMiddleware.js  | TypeScript React |         27 |          0 |          4 |         31 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/middlewares/errorMiddleware.js | TypeScript React |          9 |          5 |          3 |         17 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/models/userModel.js            | TypeScript React |         45 |          3 |          8 |         56 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/package-lock.json              | JSON             |     20,014 |          0 |          1 |     20,015 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/package.json                   | JSON             |         28 |          0 |          1 |         29 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/routes/userRoutes.js           | TypeScript React |         20 |          0 |          3 |         23 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/utils/generateToken.js         | TypeScript React |          5 |          0 |          3 |          8 |
+| /home/elbytes/Documents/projects/PlayGround_dev/server/utils/generateUniqueId.js      | TypeScript React |          8 |          0 |          4 |         12 |
+| Total                                                                                 |                  |     20,437 |         35 |         78 |     20,550 |
++---------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+

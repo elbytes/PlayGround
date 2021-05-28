@@ -1,7 +1,8 @@
 import React from 'react'
 import { Row, Col, Button, Container, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import hero from '../images/2_hero_img.png'
+import heroOne from '../images/hero_1.png'
+import heroTwo from '../images/hero_2.png'
 const styles = {
   border: { border: '1px solid' },
   heroImage: { maxWidth: '100%', height: 'auto' },
@@ -30,7 +31,7 @@ const styles = {
     paddingTop: '1rem',
     paddingBottom: '1rem',
   },
-  heroBtnContainer: { marginTop: '3rem', marginLeft: '60%' },
+  heroBtnContainer: { marginTop: '2rem', marginLeft: '60%' },
   heroBtn: { marginLeft: '1rem', fontFamily: 'Prompt' },
   heroBtnYellow: {
     marginLeft: '1rem',
@@ -39,6 +40,7 @@ const styles = {
     lineHeight: '200%',
   },
   lineHeight: { lineHeight: '200%', marginRight: '30rem' },
+  heroTextFighter: { fontFamily: 'Montserrat', lineHeight: '200%' },
 }
 function Hero() {
   return (
@@ -58,10 +60,11 @@ function Hero() {
                 meaningfull ways of connecting
               </h2>
             </div>
+
             <div>
-              <h4 style={styles.lineHeight}> Fight The Distance</h4>
-              <h4 style={styles.lineHeight}> with Love</h4>
-              <h4 style={styles.lineHeight}>and creativity</h4>
+              <h4 style={styles.heroTextFighter}> fight the distance</h4>
+              <h4 style={styles.heroTextFighter}> with love</h4>
+              <h4 style={styles.heroTextFighter}>and creativity</h4>
             </div>
             <div style={styles.heroBtnContainer}>
               <Link to='/about'>
@@ -77,7 +80,7 @@ function Hero() {
             </div>
           </Col>
           <Col lg={6} md={12} sm={12}>
-            <Image src={hero} style={styles.heroImage} />
+            <Image src={heroTwo} style={styles.heroImage} rounded />
           </Col>
         </Row>
       </Container>
