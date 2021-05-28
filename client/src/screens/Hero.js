@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import hero from '../images/2_hero_img.png'
 const styles = {
   border: { border: '1px solid' },
-  heroImage: { maxWidth: '100%', height: 'auto', zIndex: '99' },
+  heroImage: { maxWidth: '100%', height: 'auto' },
   heroText: {
     position: 'relative',
     top: '10%',
