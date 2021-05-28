@@ -1,18 +1,21 @@
-import mongoose  from 'mongoose'
+import mongoose from 'mongoose'
 
-const connectDB = async () =>{
-    try {
-        const conn = await mongoose.connect(process.env.CONNECTION_URL, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-            useCreateIndex: true
-        })
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(
+      `mongodb+srv://${procees.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.oz62v.mongodb.net/playground?retryWrites=true&w=majority`,
+      {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+        useCreateIndex: true,
+      }
+    )
 
-        console.log(`MongoDB connected ${conn.connection.host}`)
-    } catch (error) {
-        console.error(`Error: ${error.message}`)
-        process.exit(1)
-    }
+    console.log(`MongoDB connected ${conn.connection.host}`)
+  } catch (error) {
+    console.error(`Error: ${error.message}`)
+    process.exit(1)
+  }
 }
 
 export default connectDB
