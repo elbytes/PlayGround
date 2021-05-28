@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "server": "nodemon server/index",
+    "server": "node server/index",
     "client": "npm start --prefix client"
   },
   "devDependencies": {

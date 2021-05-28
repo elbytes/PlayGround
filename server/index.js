@@ -8,7 +8,6 @@ import userRoutes from './routes/userRoutes.js'
 import { errorHandler } from './middlewares/errorMiddleware.js'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
-import Pubnub from 'pubnub'
 
 dotenv.config()
 connectDB()
