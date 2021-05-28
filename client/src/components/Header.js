@@ -1,4 +1,4 @@
-import { LinkContainer } from 'react-router-bootstrap'
+import { LinkContainer, Link } from 'react-router-bootstrap'
 import React, { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faIndent } from '@fortawesome/free-solid-svg-icons'
@@ -47,7 +47,7 @@ const Header = () => {
                   <NavDropdown.Item>Profile</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Item onClick={logoutHandler}>
-                  Logout
+                  Log out
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (

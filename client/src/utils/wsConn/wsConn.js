@@ -4,7 +4,7 @@ import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
 
-const SERVER = 'http://localhost:5000'
+const SERVER = 'https://playgroundonline.herokuapp.com/'
 
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
