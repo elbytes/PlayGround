@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 import { setUsername } from '../../actions/dashboardActions'
 import { registerNewUser } from '../../utils/wsConn/wsConn'
 import image06 from '../../images/06.jpeg'
-
 import image04 from '../../images/04.jpeg'
 const NicknameLogin = ({ saveUsername }) => {
   const userLogin = useSelector((state) => state.userLogin)
@@ -20,6 +19,7 @@ const NicknameLogin = ({ saveUsername }) => {
     margin: { marginTop: '1rem', marginBottom: '1rem' },
     top: { top: '1rem' },
     font: { fontFamily: 'Prompt' },
+    img: { maxWidth: '100%', heigh: 'auto' },
   }
   const handleNicknameSubmitBtn = () => {
     registerNewUser(username)
@@ -35,7 +35,7 @@ const NicknameLogin = ({ saveUsername }) => {
   return (
     <div>
       <Row>
-        <Col>
+        <Col lg={6} md={12} sm={12}>
           <Card>
             <Card.Body>
               <Card.Title style={styles.font}>
@@ -59,16 +59,16 @@ const NicknameLogin = ({ saveUsername }) => {
             </Card.Body>
           </Card>
         </Col>
-        <Col>
-          <Image src={image06} rounded />
+        <Col lg={6} md={12} sm={12}>
+          <Image src={image06} rounded style={styles.img} />
         </Col>
       </Row>
 
       <Row>
-        <Col style={styles.top}>
-          <Image src={image04} rounded />
+        <Col style={styles.top} lg={6} md={12} sm={12}>
+          <Image src={image04} rounded style={styles.img} />
         </Col>
-        <Col style={styles.margin}>
+        <Col style={styles.margin} lg={6} md={12} sm={12}>
           <Alert variant='danger'>
             <p>
               Make sure the person you want to conenct with knows the nickname .

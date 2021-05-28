@@ -1,9 +1,10 @@
 import React from 'react'
-
+import BookItemList from './BookItemList'
 const BookIndex = () => {
   return (
     <div>
-      <h4>Book aactivity coming soon</h4>
+      <h4>Library</h4>
+      <BookItemList />
     </div>
   )
 }

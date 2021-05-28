@@ -36,13 +36,15 @@ const Header = () => {
           <Navbar.Brand className='logo'>PlayGround</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
-        <Navbar.Collapse id='basic-navbar-nav'>
-          <Nav className='ml-auto'>
-            <Nav.Link href='/home'>Go to Dashboard {dashboardIcon}</Nav.Link>
+        <Navbar.Collapse id='basic-navbar-nav' className='d-flex'>
+          <Nav className='ml-auto p-2'>
+            {userInfo && (
+              <Nav.Link href='/home'>Go to Dashboard {dashboardIcon}</Nav.Link>
+            )}
             {userInfo ? (
-              <NavDropdown title={userInfo.name} id='username'>
+              <NavDropdown title={userInfo.name} id='username' className='mr-4'>
                 <LinkContainer to='/profile'>
-                  <NavDropdown.Item>{userInfo.name}'s profile</NavDropdown.Item>
+                  <NavDropdown.Item>Profile</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Item onClick={logoutHandler}>
                   Logout

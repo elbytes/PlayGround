@@ -4,7 +4,6 @@ import connectDB from './config/db.js'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import activityRoutes from './routes/activityRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import { errorHandler } from './middlewares/errorMiddleware.js'
 import { createServer } from 'http'
@@ -27,7 +26,7 @@ app.use(cors(options))
 app.get('/', (req, res) => {
   res.send('API is running')
 })
-app.use('/api/activity', activityRoutes)
+
 app.use('/api/users', userRoutes)
 //app.use(notFound)
 app.use(errorHandler)
@@ -172,9 +171,19 @@ io.on('connection', (socket) => {
   })
 
   //listeners for book
-  socket.on('book-open', (data) => {
-    console.log('received book open data on server', data)
-    io.to(data.socket).emit('book-open', data.data)
+  socket.on('book-select', (data) => {
+    console.log('received book select data on server', data)
+    io.to(data.socket).emit('book-select', data.bookSelected)
+  })
+
+  socket.on('book-next', (data) => {
+    console.log('received book next data on server', data)
+    io.to(data.socket).emit('book-next', data.next)
+  })
+
+  socket.on('book-prev', (data) => {
+    console.log('received book prev data on server', data)
+    io.to(data.socket).emit('book-prev', data.prev)
   })
 })
 

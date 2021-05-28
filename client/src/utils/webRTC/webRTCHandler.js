@@ -11,6 +11,11 @@ import {
   setReceivedMoved,
   setGameStateChange,
 } from '../../actions/chessActions'
+import {
+  setSelectedBook,
+  setPrevClickedBook,
+  setNextClickedBook,
+} from '../../actions/bookActions'
 import { callStates } from '../../constants/callConstants'
 import {
   setCallingDialogueVisibile,
@@ -265,4 +270,19 @@ export const handleReceivedDrawData = (drawData) => {
   // console.log('dispatching drawData to store', drawData)
 }
 
+//function for book selected
+export const handleBookSelect = (selected) => {
+  store.dispatch(setSelectedBook(selected))
+  console.log('dispatching selected book to store', selected)
+}
+
+export const handleBookNextClicked = (data) => {
+  store.dispatch(setNextClickedBook(data))
+  console.log('dispatching next click to store', data)
+}
+
+export const handleBookPrevClicked = (data) => {
+  store.dispatch(setPrevClickedBook(data))
+  console.log('dispatching prev click to store', data)
+}
 export { connectedUserSocketId }

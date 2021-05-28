@@ -36,6 +36,7 @@ const DirectCall = (props) => {
   } = props
   return (
     <>
+      <Row></Row>
       <Row style={styles.verticalMArgin}>
         <Col>
           <LocalVideoView localStream={localStream} />

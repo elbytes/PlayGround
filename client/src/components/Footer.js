@@ -1,53 +1,60 @@
-import { Container, Row, Col } from 'react-bootstrap'
 import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
+const styles = {
+  links: { textDecoration: 'none', color: '#000', fontSize: '1vw' },
+  footerDiv: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingLeft: '5%',
+    marginTop: '1%',
+    marginBottom: '0.1%',
+    bottom: '0px',
+  },
+}
 const Footer = () => {
   return (
     <footer>
       <Container fluid className='text-center text-md-left'>
-        <Row>
-          <Col xs={12} md={6}>
-            <h5 className='title'>PlayGround</h5>
-          </Col>
-        </Row>
-        <Row>
+        <Row style={styles.footerDiv}>
           <Col>
-            {/* <ul>
-              <li className='list-unstyled'>
-                <a href='#!'>Link 4</a>
-              </li>
-            </ul> */}
+            {' '}
+            <div>
+              <Link to='/about' style={styles.links}>
+                about
+              </Link>
+            </div>
           </Col>
           <Col>
-            <ul>
-              <li className='list-unstyled'>
-                <a href='#!'>Link 1</a>
-              </li>
-            </ul>
+            <div>
+              <a
+                href='https://github.com/elbytes/PlayGround'
+                style={styles.links}
+              >
+                on GitHub
+              </a>
+            </div>
+          </Col>
+
+          <Col>
+            <div>
+              <Link to='/legal' style={styles.links}>
+                legal
+              </Link>
+            </div>
           </Col>
           <Col>
-            <ul>
-              <li className='list-unstyled'>
-                <a href='#!'>Link 1</a>
-              </li>
-            </ul>
+            &copy; {new Date().getFullYear()} Copyright:
+            <a
+              target='_blank'
+              rel='noreferrer'
+              href='https://github.com/elbytes/PlayGround'
+              style={styles.links}
+            >
+              &nbsp;elBytes
+            </a>
           </Col>
-          <Col>
-            <ul>
-              <li className='list-unstyled'>
-                <a href='#!'>Link 1</a>
-              </li>
-            </ul>
-          </Col>
-        </Row>
-        <Row></Row>
-        <Row>
-          <div className='footer-copyright text-center py-3'>
-            <Container fluid>
-              &copy; {new Date().getFullYear()} Copyright:{' '}
-              <a href='https://www.mdbootstrap.com'> MDBootstrap.com </a>
-            </Container>
-          </div>
         </Row>
       </Container>
     </footer>

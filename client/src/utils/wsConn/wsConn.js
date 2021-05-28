@@ -82,10 +82,15 @@ export const connectWithWebSocket = () => {
   socket.on('new-add', (data) => {
     //
   })
+  //listener for selecting a book
+  socket.on('book-select', (data) => {
+    console.log('received book select data back from server', data)
+    webRTCHandler.handleBookSelect(data)
+  })
 
-  //listeners for book
-  socket.on('book-open', (data) => {
-    console.log('received book data back from server')
+  socket.on('book-next', (data) => {
+    console.log('received book next data back from server', data)
+    webRTCHandler.handleBookNextClicked(data)
   })
 }
 
@@ -237,9 +242,18 @@ export const eraseBoard = (canvas) => {
 }
 
 //book emit events
-export const emitOpenBook = (data) => {
-  socket.emit('book-open', data)
-  console.log('sending open book data to server')
+export const emitBookSelection = (data) => {
+  socket.emit('book-select', data)
+  console.log('sending book selected to server')
 }
 
+export const emitNextClicked = (data) => {
+  socket.emit('book-next', data)
+  console.log('sending next click to server')
+}
+
+export const emitPrevClicked = (data) => {
+  socket.emit('book-prev', data)
+  console.log('sending prev click to server')
+}
 export { mySocketId }

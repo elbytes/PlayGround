@@ -8,15 +8,21 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import sidePicture from '../images/002.jpg'
 
+const styles = {
+  img: { width: '305px' },
+  sign: {
+    textAlign: 'left',
+    paddingLeft: '0px',
+    marginLeft: '0px',
+  },
+  border: { border: '1px solid' },
+}
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const dispatch = useDispatch()
-
   const userLogin = useSelector((state) => state.userLogin)
   const { loading, error, userInfo } = userLogin
-
   const redirect = location.search ? location.search.split('=')[1] : '/'
 
   useEffect(() => {
@@ -31,9 +37,9 @@ const LoginScreen = ({ location, history }) => {
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col xs={6}>
+    <Row>
+      <Col>
+        <div lg={6} sm={12} xs={12} md={6}>
           <FormContainer>
             <Card bg='light'>
               <Card.Body>
@@ -78,20 +84,20 @@ const LoginScreen = ({ location, history }) => {
                           : '/register'
                       }
                     >
-                      Sign up
-                    </Link>{' '}
+                      Sign up&nbsp;
+                    </Link>
                     for a free account
                   </Col>
                 </Row>
               </Card.Body>
             </Card>
           </FormContainer>
-        </Col>
-        <Col xs={6}>
-          <Image src={sidePicture} fluid />
-        </Col>
-      </Row>
-    </Container>
+        </div>
+        {/* <div lg={6} sm={12} xs={12} md={6}>
+          <Image src={sidePicture} responsive style={styles.img} />
+        </div> */}
+      </Col>
+    </Row>
   )
 }
 

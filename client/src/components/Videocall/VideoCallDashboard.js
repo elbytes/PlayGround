@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Row, Col } from 'react-bootstrap'
-
+import { Row, Col, Alert } from 'react-bootstrap'
 import * as webRTCHandler from '../../utils/webRTC/webRTCHandler'
 import VideoCallDisplay from './VideoCallDisplay'
 import ActiveUsersList from '../ActiveUsersList/ActiveUsersList'
@@ -24,6 +23,8 @@ const styles = {
 }
 const VideoCallDashboard = ({ id }) => {
   const selectedActivity = useSelector((state) => state.call.activity)
+  const callState = useSelector((state) => state.call.callState)
+
   console.log(selectedActivity)
   useEffect(() => {
     webRTCHandler.getLocalStream()
@@ -33,7 +34,6 @@ const VideoCallDashboard = ({ id }) => {
   return (
     <div className='home'>
       <div className='border'>
-        <Row></Row>
         <Row style={styles.verticalMArgin}>
           <Col>
             <div className='border'>
@@ -44,11 +44,18 @@ const VideoCallDashboard = ({ id }) => {
               {selectedActivity.activity === '' && <StartingActivity />}
             </div>
           </Col>
+
           <Col>
             <Row style={styles.verticalMArgin}>
-              <Col>
+              {callState === callStates.CALL_IN_PROGRESS ? (
                 <ActivityListScreen />
-              </Col>
+              ) : (
+                <Col>
+                  <Alert variant='info'>
+                    To sart an activity, connect with a friend first
+                  </Alert>
+                </Col>
+              )}
             </Row>
             <Row style={styles.verticalMArgin}>
               <Col>
@@ -62,11 +69,7 @@ const VideoCallDashboard = ({ id }) => {
         <Row>
           <Col>
             <div>
-              {callStates.CALL_AVAILABLE ? (
-                <ActiveUsersList />
-              ) : (
-                <span>Call</span>
-              )}
+              {callState === callStates.CALL_AVAILABLE && <ActiveUsersList />}
             </div>
           </Col>
         </Row>

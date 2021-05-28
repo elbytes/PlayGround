@@ -9,7 +9,7 @@ import {
   modifyObj,
 } from '../../utils/wsConn/wsConn'
 import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
-import bg01 from '../../images/landscapes/0001.jpg'
+
 const FabricCanvasBoard = () => {
   const [canvas, setCanvas] = useState('')
   const color = useSelector((state) => state.canvas.color)

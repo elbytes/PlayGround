@@ -11,8 +11,6 @@
     "@fortawesome/fontawesome-free": "^5.15.3",
     "bcryptjs": "^2.4.3",
     "express-async-handler": "^1.1.4",
-    "mongoose": "^5.12.2",
-    "react-icons": "^4.2.0",
-    "twilio": "^3.60.0"
+    "mongoose": "^5.12.2"
   }
 }
