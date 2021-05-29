@@ -73,7 +73,7 @@ export const register =
 
       const { data } = await axios.post(
         `${baseUrl}/api/users`,
-        { name, username, email, password },
+        { name, email, username, password },
         config
       )
 
