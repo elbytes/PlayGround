@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image } from 'react-bootstrap'
-import BookItemList from './BookItemList'
+// import BookItemList from './BookItemList'
 import library from '../../images/Selection_088.png'
 
 const styles = {

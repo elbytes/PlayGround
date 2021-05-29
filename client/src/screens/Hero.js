@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Button, Container, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import heroOne from '../images/hero_1.png'
+// import heroOne from '../images/hero_1.png'
 import heroTwo from '../images/hero_2.png'
 const styles = {
   border: { border: '1px solid' },

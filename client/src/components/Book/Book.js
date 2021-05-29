@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Image, Button } from 'react-bootstrap'
-import { bookNameList } from './bookData/bookNameList'
+// import { bookNameList } from './bookData/bookNameList'
 import { peterRabbitBookContent } from './bookData/peterRabbitBookContent'
 import { peterRabbitImages } from './bookData/peterRabbitImages'
 import TheEnd from './TheEnd'
@@ -19,9 +19,8 @@ const styles = {
   nextBtns: { marginTop: '20%', marginLeft: '5%' },
 }
 const Book = (props) => {
-  let id = props.id
   const [pageNumber, setPageNumber] = useState(0)
-  const [pageParagraph, setPageParagraph] = useState(
+  // const [pageParagraph, setPageParagraph] = useState(
     'Once upon a time there were four little Rabbits, and their names were— Flopsy,  Mopsy,  Cotton-tail,  and Peter. They lived with their Mother in a sand-bank, underneath the root of a very big fir-tree.'
   )
 

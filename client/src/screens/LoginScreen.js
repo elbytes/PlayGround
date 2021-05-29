@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Row, Col, Card, Image, Container } from 'react-bootstrap'
+import { Form, Button, Row, Col, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
-const styles = {
-  img: { width: '305px' },
-  sign: {
-    textAlign: 'left',
-    paddingLeft: '0px',
-    marginLeft: '0px',
-  },
-  border: { border: '1px solid' },
-}
+// const styles = {
+//   img: { width: '305px' },
+//   sign: {
+//     textAlign: 'left',
+//     paddingLeft: '0px',
+//     marginLeft: '0px',
+//   },
+//   border: { border: '1px solid' },
+// }
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
