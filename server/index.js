@@ -153,6 +153,11 @@ io.on('connection', (socket) => {
     io.to(data.socket).emit('erase', data.canvas)
   })
 
+  socket.on('backdrop', (data) => {
+    console.log('received backdrop event on server', data)
+    io.to(data.socket).emit('backdrop', data.backdrop)
+  })
+
   //listeners for chess
   socket.on('move', (data) => {
     io.to(data.socket).emit('move', data.move)

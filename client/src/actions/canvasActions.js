@@ -18,6 +18,6 @@ export const setColor = (color) => {
   }
 }
 
-export const setBackDrop = (backDrop) => {
-  return { type: CANVAS_SET_BACKDROP, backDrop }
+export const setBackDrop = (backdrop) => {
+  return { type: CANVAS_SET_BACKDROP, backdrop }
 }

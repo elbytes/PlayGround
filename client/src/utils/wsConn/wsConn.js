@@ -4,7 +4,7 @@ import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
 
-const SERVER = 'https://playgroundonline.herokuapp.com/'
+const SERVER = 'http://playgroundonline.netlify.app/'
 
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
@@ -79,9 +79,16 @@ export const connectWithWebSocket = () => {
     webRTCHandler.handleReceivedDrawData(data)
   })
   //listener for adding a new shape to canvas
-  socket.on('new-add', (data) => {
-    //
+  // socket.on('new-add', (data) => {
+  //   //TODO
+  // })
+
+  //listener for setting a new backdrop
+  socket.on('backdrop', (data) => {
+    console.log('received backdrop data back from server', data)
+    webRTCHandler.handleBackDrop(data)
   })
+
   //listener for selecting a book
   socket.on('book-select', (data) => {
     console.log('received book select data back from server', data)
@@ -184,10 +191,6 @@ export const emitModify = (obj) => {
   socket.emit('object-modified', obj)
 }
 
-export const emitErase = (data) => {
-  socket.emit('erase', data)
-}
-
 //adding object on listener for add new shape
 export const addObj = (canvas) => {
   socket.on('new-add', (data) => {
@@ -241,7 +244,10 @@ export const eraseBoard = (canvas) => {
   })
 }
 
-export const setBackDrop = (data) => {}
+export const setBackDrop = (data) => {
+  socket.emit('backdrop', data)
+  console.log('sending backdrop set to server')
+}
 
 //book emit events
 export const emitBookSelection = (data) => {
