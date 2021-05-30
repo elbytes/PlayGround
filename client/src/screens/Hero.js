@@ -56,9 +56,7 @@ function Hero() {
         <Row>
           <Col lg={6} md={12} sm={12}>
             <div style={styles.lineHeight}>
-              <h2 style={styles.heroTextBlue}>
-                meaningfull ways of connecting
-              </h2>
+              <h2 style={styles.heroTextBlue}>meaningful ways of connecting</h2>
             </div>
 
             <div>

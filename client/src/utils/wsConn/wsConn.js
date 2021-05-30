@@ -241,6 +241,8 @@ export const eraseBoard = (canvas) => {
   })
 }
 
+export const setBackDrop = (data) => {}
+
 //book emit events
 export const emitBookSelection = (data) => {
   socket.emit('book-select', data)

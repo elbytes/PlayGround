@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { Button } from 'react-bootstrap'
 import { fabric } from 'fabric'
 import { v1 as uuid } from 'uuid'
 import {
@@ -7,22 +8,35 @@ import {
   emitModify,
   addObj,
   modifyObj,
+  setBackDrop,
 } from '../../utils/wsConn/wsConn'
 import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
+import { backDropUrls } from './backdropUrls'
+import BackDrop from './BackDrop'
 
+const styles = {
+  btn: { border: 'none', margin: '0.5rem' },
+  canvas: {
+    Maxwidth: '1024px',
+    minWidth: '320px',
+    position: 'relative',
+    height: 'auto',
+  },
+  backDropDiv: { width: '120px', float: 'left' },
+}
 const FabricCanvasBoard = () => {
   const [canvas, setCanvas] = useState('')
   const color = useSelector((state) => state.canvas.color)
-  const [isMousePressed, setIsMousePressed] = useState(false)
-
+  const [pickerVisible, setPickerVisible] = useState(false)
+  const [selectedBackDrop, setSelectedBackDrop] = useState('')
   const initCanvas = () =>
     new fabric.Canvas('canv', {
       height: 500,
       width: 810,
       backgroundColor: 'white',
-      isDrawingMode: true,
-      fill: color,
+      border: '1px solid',
     })
+
   useEffect(() => {
     setCanvas(initCanvas())
   }, [color])
@@ -96,56 +110,95 @@ const FabricCanvasBoard = () => {
     emitAdd(drawDataToSend)
   }
 
-  //   const addBackground = () => {
-  //     fabric.Image.fromURL(bg01, (img) => {
-  //       canvas.backgroundImage = img
-  //       canvas.renderAll()
-  //     })
-  //   }
+  const addBackground = (url) => {
+    fabric.Image.fromURL(url, (img) => {
+      canvas.backgroundImage = img
+      canvas.renderAll()
+    })
+  }
 
-  const drawingMode = (canvas) => {
-    if (canvas) {
-      canvas.on('mouse:move', (event) => {
-        canvas.isDrawingMode = true
-        canvas.renderAll()
-      })
-      canvas.on('mouse:down', (event) => {
-        setIsMousePressed(true)
-        canvas.setCursor('crosshair')
-        canvas.renderAll()
-      })
-      canvas.on('mouse:up', (event) => {
-        setIsMousePressed(false)
-        canvas.setCursor('default')
-        canvas.renderAll()
-      })
+  const addImage = () => {
+    fabric.Image.fromURL('./img/canvasImages/1424456139.svg', function (oImg) {
+      canvas.add(oImg)
+    })
+  }
+
+  const togglePicker = () => {
+    setPickerVisible(!pickerVisible)
+  }
+
+  const onBackDropSelect = (e) => {
+    let backDropId = e.target.id
+    // setSelectedBackDrop(backDropId)
+    addBackground(`/img/backdrops/000${backDropId}.jpg`)
+
+    //send to server
+    let backDropDataToSend = {
+      socket: connectedUserSocketId,
+      backdrop: backDropId,
     }
+    setBackDrop(backDropDataToSend)
   }
 
   return (
     <div>
-      <span>fabric</span>
       <div>
+        <Button onClick={togglePicker} style={styles.btn} variant='info'>
+          Backdrops
+        </Button>
+        {pickerVisible && (
+          <div style={{ margin: '20px' }}>
+            <p>Choose a backdrop</p>
+            {backDropUrls.map((backdrop) => (
+              <div onClick={onBackDropSelect} style={styles.backDropDiv}>
+                <BackDrop src={backdrop.src} id={backdrop.id} />
+              </div>
+            ))}
+          </div>
+        )}
         <div>
-          <button type='button' name='draw' onClick={drawingMode}>
-            draw
-          </button>
-          <button type='button' name='circle' onClick={addShape}>
+          {' '}
+          <Button
+            type='button'
+            name='circle'
+            onClick={addShape}
+            style={styles.btn}
+            variant='primary'
+          >
             Add a Circle
-          </button>
-
-          <button type='button' name='triangle' onClick={addShape}>
+          </Button>
+          <Button
+            type='button'
+            name='triangle'
+            onClick={addShape}
+            style={styles.btn}
+            variant='warning'
+          >
             Add a Triangle
-          </button>
-
-          <button type='button' name='rectangle' onClick={addShape}>
+          </Button>
+          <Button
+            type='button'
+            name='rectangle'
+            onClick={addShape}
+            style={styles.btn}
+            variant='success'
+          >
             Add a Rectangle
-          </button>
+          </Button>
+          <Button
+            type='button'
+            name='rectangle'
+            onClick={addImage}
+            style={styles.btn}
+            variant='success'
+          >
+            Add something else
+          </Button>
         </div>
+      </div>
 
-        <div>
-          <canvas id='canv' />
-        </div>
+      <div style={styles.canvas}>
+        <canvas id='canv' />
       </div>
     </div>
   )

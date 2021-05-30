@@ -1,5 +1,9 @@
-import { CANVAS_SET_DRAW } from '../constants/canvasConstants'
-import { CANVAS_SET_COLOR } from '../constants/canvasConstants'
+import {
+  CANVAS_SET_DRAW,
+  CANVAS_SET_COLOR,
+  CANVAS_SET_BACKDROP,
+} from '../constants/canvasConstants'
+
 export const setDrawDataAction = (drawData) => {
   return {
     type: CANVAS_SET_DRAW,
@@ -12,4 +16,8 @@ export const setColor = (color) => {
     type: CANVAS_SET_COLOR,
     color,
   }
+}
+
+export const setBackDrop = (backDrop) => {
+  return { type: CANVAS_SET_BACKDROP, backDrop }
 }
