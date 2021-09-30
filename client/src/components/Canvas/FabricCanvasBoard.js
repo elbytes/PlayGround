@@ -28,7 +28,7 @@ const FabricCanvasBoard = () => {
   const [canvas, setCanvas] = useState('')
   const color = useSelector((state) => state.canvas.color)
   const [pickerVisible, setPickerVisible] = useState(false)
-  const backDrop = useSelector((state) => state.canvas.backdrop)
+
   const initCanvas = () =>
     new fabric.Canvas('canv', {
       height: 500,
@@ -41,9 +41,6 @@ const FabricCanvasBoard = () => {
     setCanvas(initCanvas())
   }, [color])
 
-  useEffect(() => {
-    addBackground(backDrop)
-  }, [backDrop, addBackground])
   useEffect(() => {
     if (canvas) {
       canvas.on('object:modified', function (options) {
