@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
   socket.on('register-new-user', (data) => {
     peers.push({
       username: data.username,
-      socketId: data.socketId,
+      socketId: socket.id,
     })
     console.log('registered new user')
     console.log(peers)
@@ -77,6 +77,7 @@ io.on('connection', (socket) => {
   //listeners for direct call
   socket.on('pre-offer', (data) => {
     console.log('pre-offer handled')
+    console.log(data)
     io.to(data.callee.socketId).emit('pre-offer', {
       callerUsername: data.caller.username,
       callerSocketId: socket.id,

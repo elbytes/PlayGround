@@ -1,26 +1,30 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import BookItem from './BookItem'
 import { bookCoverList } from './bookData/bookCoverList'
 import { bookNameList } from './bookData/bookNameList'
 import Book from './Book'
 import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
 import { emitBookSelection } from '../../utils/wsConn/wsConn'
-
+import store from '../../store'
+import { setSelectedBook } from '../../actions/bookActions'
 const styles = { book: { cursor: 'pointer' } }
 const BookItemList = () => {
+  const dispatch = useDispatch()
   let selectedBookFromStore = ''
   selectedBookFromStore = useSelector((state) => state.book.bookSelected)
   const [selectedBook, setSelectedBook] = useState('')
+
   const createBookItemCard = (bookName) => {
     const onBookSelected = (e) => {
-      // setSelectedBook(e.target.id)
+      setSelectedBook(e.target.id)
+      // store.dispatch(setSelectedBook(selectedBook))
       const bookSelectedDatToSend = {
         socket: connectedUserSocketId,
         bookSelected: e.target.id,
       }
       emitBookSelection(bookSelectedDatToSend)
-      setSelectedBook(selectedBookFromStore)
+      //
     }
 
     return (
@@ -36,6 +40,10 @@ const BookItemList = () => {
       </>
     )
   }
+
+  useEffect(() => {
+    setSelectedBook(selectedBookFromStore)
+  }, [selectedBookFromStore])
 
   return (
     <div>

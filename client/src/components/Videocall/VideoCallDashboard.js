@@ -11,6 +11,7 @@ import BookIndex from '../Book/BookIndex'
 import ActivityListScreen from '../../screens/ActivityListScreen'
 import { StartingActivity } from '../StartingActivity'
 import { callStates } from '../../constants/callConstants'
+import SearchBox from '../SearchUsers/SearchUsers'
 
 const styles = {
   menu: {
@@ -52,7 +53,7 @@ const VideoCallDashboard = ({ id }) => {
               ) : (
                 <Col>
                   <Alert variant='info'>
-                    To sart an activity, connect with a friend first
+                    To start an activity, connect with a friend first
                   </Alert>
                 </Col>
               )}
@@ -69,7 +70,14 @@ const VideoCallDashboard = ({ id }) => {
         <Row>
           <Col>
             <div>
-              {callState === callStates.CALL_AVAILABLE && <ActiveUsersList />}
+              {callState === callStates.CALL_AVAILABLE ? (
+                <>
+                  <p>Active users</p>
+                  <ActiveUsersList />
+                </>
+              ) : (
+                <SearchBox />
+              )}
             </div>
           </Col>
         </Row>

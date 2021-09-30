@@ -18,8 +18,10 @@ const HomeScreen = ({ location, history }) => {
       history.push('/login')
     } else {
       if (user.name) {
+        console.log(userInfo.username)
         dispatch({ type: USER_HOME_SUCCESS })
         dispatch(getUserHome())
+
         registerNewUser(userInfo.username)
       }
     }
@@ -31,10 +33,12 @@ const HomeScreen = ({ location, history }) => {
 
   return (
     <>
-      <div className='home container-md' sm={12} md={12}>
-        <h2>Welcome {userInfo.name}</h2>
-        <NicknameLogin username={username} setUsername={setUsername} />
-      </div>
+      {userInfo && (
+        <div className='home container-md' sm={12} md={12}>
+          <h2>Welcome {userInfo.name}</h2>
+          <NicknameLogin username={username} setUsername={setUsername} />
+        </div>
+      )}
     </>
   )
 }

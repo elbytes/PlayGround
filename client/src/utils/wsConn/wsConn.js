@@ -4,7 +4,8 @@ import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
 
-const SERVER = 'http://playgroundonline.netlify.app/'
+// const SERVER = 'http://playgroundonline.netlify.app/'
+const SERVER = 'http://localhost:5000'
 
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
@@ -101,7 +102,7 @@ export const connectWithWebSocket = () => {
   })
 }
 
-//registering a user after log in in array of active users
+//registering a user after login in array of active users
 export const registerNewUser = (username) => {
   socket.emit('register-new-user', {
     username: username,

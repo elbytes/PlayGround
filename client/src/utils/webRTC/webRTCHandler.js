@@ -44,6 +44,7 @@ let peerConnection
 let dataChannel
 
 export const getLocalStream = () => {
+  console.log('getting this')
   navigator.mediaDevices
     .getUserMedia(defaultConstrains)
     .then((stream) => {
@@ -63,6 +64,7 @@ export const getLocalStream = () => {
 
 const createPeerConnection = () => {
   peerConnection = new RTCPeerConnection(configuration)
+  console.log(peerConnection)
   const localStream = store.getState().call.localStream
 
   for (const track of localStream.getTracks()) {

@@ -1,11 +1,11 @@
 import React from 'react'
-import { Row, Col, Button, Container, Image } from 'react-bootstrap'
+import { Row, Col, Button, Container, Image, Alert } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 // import heroOne from '../images/hero_1.png'
 import heroTwo from '../images/hero_2.png'
 const styles = {
   border: { border: '1px solid' },
-  heroImage: { maxWidth: '100%', height: 'auto' },
+  heroImage: { maxWidth: '100%', height: 'auto', display: 'flex' },
   heroText: {
     position: 'relative',
     top: '10%',
@@ -13,34 +13,40 @@ const styles = {
     bottom: '10%',
     color: '#262626	',
     marginBottom: '1%',
-    paddingRight: '50%',
+    display: 'flex',
   },
-  heroTextBlue: {
-    color: '#3366CC',
-    fontSize: '3vw',
-    marginBottom: '2rem',
-    marginTop: '2rem',
+  textTwo: {
+    fontFamily: 'Prompt',
+    lineHeight: '200%',
   },
   heroTitle: {
     backgroundColor: '#262626',
     color: '#ffffff	',
     fontSize: '5vw',
     textAlign: 'left',
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-    paddingTop: '1rem',
-    paddingBottom: '1rem',
+    padding: '0.7rem',
   },
-  heroBtnContainer: { marginTop: '2rem', marginLeft: '60%' },
-  heroBtn: { marginLeft: '1rem', fontFamily: 'Prompt' },
+  heroBtnContainer: {
+    marginTop: '2rem',
+    marginBottom: '2rem',
+    marginLeft: '6rem',
+  },
+  heroBtn: { margin: '1rem', fontFamily: 'Prompt' },
   heroBtnYellow: {
-    marginLeft: '1rem',
+    margin: '1rem',
     color: '#000',
     fontFamily: 'Prompt',
-    lineHeight: '200%',
   },
   lineHeight: { lineHeight: '200%', marginRight: '30rem' },
-  heroTextFighter: { fontFamily: 'Montserrat', lineHeight: '200%' },
+  heroTextFighter: {
+    fontSize: '3rem',
+    fontFamily: 'Montserrat',
+    lineHeight: '200%',
+    paddingTop: '2rem',
+  },
+  link: {
+    textDecoration: 'none',
+  },
 }
 function Hero() {
   return (
@@ -55,15 +61,10 @@ function Hero() {
         </Row>
         <Row>
           <Col lg={6} md={12} sm={12}>
-            <div style={styles.lineHeight}>
-              <h2 style={styles.heroTextBlue}>meaningful ways of connecting</h2>
-            </div>
+            <h4 style={styles.heroTextFighter}>
+              meaningful ways of connecting
+            </h4>
 
-            <div>
-              <h4 style={styles.heroTextFighter}> fight the distance</h4>
-              <h4 style={styles.heroTextFighter}> with love</h4>
-              <h4 style={styles.heroTextFighter}>and creativity</h4>
-            </div>
             <div style={styles.heroBtnContainer}>
               <Link to='/about'>
                 <Button variant='info' style={styles.heroBtn}>
@@ -76,9 +77,27 @@ function Hero() {
                 </Button>
               </Link>
             </div>
+            <h3 style={styles.textTwo}>
+              PlayGround is a web based video call application with integrated
+              activities for kids and families.
+            </h3>
           </Col>
           <Col lg={6} md={12} sm={12}>
             <Image src={heroTwo} style={styles.heroImage} rounded />
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={12} md={12} sm={12} className='mt-5'>
+            <Alert variant='danger'>
+              This is an experimental web application. Please practice child
+              safety practices.{' '}
+              <Alert.Link
+                href='https://www.consumer.ftc.gov/topics/protecting-kids-online'
+                syle={styles.link}
+              >
+                Learn about how to protecting kids online.
+              </Alert.Link>
+            </Alert>
           </Col>
         </Row>
       </Container>

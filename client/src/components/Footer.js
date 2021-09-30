@@ -1,17 +1,25 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-
+import { FiTerminal } from 'react-icons/fi'
 const styles = {
-  links: { textDecoration: 'none', color: '#000', fontSize: '1vw' },
+  links: {
+    textDecoration: 'none',
+    color: '#000',
+    fontSize: '1rem',
+    display: 'flex',
+    textAlign: 'center',
+  },
   footerDiv: {
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingLeft: '5%',
+    paddingRight: '5%',
     marginTop: '1%',
-    marginBottom: '0.1%',
-    bottom: '0px',
+    display: 'flex',
   },
+  text: { fontSize: '1vw', display: 'flex' },
+  copyRight: { marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' },
 }
 const Footer = () => {
   return (
@@ -20,7 +28,7 @@ const Footer = () => {
         <Row style={styles.footerDiv}>
           <Col>
             {' '}
-            <div>
+            <div style={styles.text}>
               <Link to='/about' style={styles.links}>
                 about
               </Link>
@@ -29,10 +37,12 @@ const Footer = () => {
           <Col>
             <div>
               <a
+                target='_blank'
+                rel='noreferrer'
                 href='https://github.com/elbytes/PlayGround'
                 style={styles.links}
               >
-                on GitHub
+                GitHub
               </a>
             </div>
           </Col>
@@ -45,14 +55,16 @@ const Footer = () => {
             </div>
           </Col>
           <Col>
-            &copy; {new Date().getFullYear()} Copyright:
+            &copy; {new Date().getFullYear()}
             <a
               target='_blank'
               rel='noreferrer'
-              href='https://github.com/elbytes/PlayGround'
+              href='http://elbytes.tech'
               style={styles.links}
             >
               &nbsp;elBytes
+              <FiTerminal size='1.5rem' />
+              <>DO LOGIC</>
             </a>
           </Col>
         </Row>

@@ -21,7 +21,7 @@ const authUser = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(401)
-    throw new Error('Invalid email or password')
+    throw new Error('Invalid email or password. Please try again.')
   }
 })
 
@@ -76,7 +76,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(404)
-    throw new Error('User not found')
+    throw new Error('User not found. Please try again')
   }
 })
 
@@ -91,7 +91,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (userExists) {
     res.status(400)
-    throw new Error('User already exisrs')
+    throw new Error('User already exisrs. Please login instead.')
   }
 
   const user = await User.create({
