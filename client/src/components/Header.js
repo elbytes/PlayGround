@@ -1,4 +1,3 @@
-import { LinkContainer } from 'react-router-bootstrap'
 import React, { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faIndent } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +6,7 @@ import { Nav, Navbar, Button, NavDropdown } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
 const styles = {
   btn: { fontFamily: 'Prompt' },
+  navItems: { display: 'flex' },
 }
 const Header = () => {
   const dispatch = useDispatch()
@@ -19,9 +19,10 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar variant='light' expand='lg' collapseOnSelect>
-        <LinkContainer to='/'>
-          <Navbar.Brand>
+      <Navbar collapseOnSelect expand='lg' variant='light'>
+        <Nav>
+          {' '}
+          <Navbar.Brand href='#home'>
             <img
               src={logo}
               width='30'
@@ -30,38 +31,44 @@ const Header = () => {
               alt='PlayGround logo'
             />
           </Navbar.Brand>
-        </LinkContainer>
+          <Navbar.Brand className='logo' href='/'>
+            Welcome to PlayGround
+          </Navbar.Brand>
+        </Nav>
 
-        <LinkContainer to='/'>
-          <Navbar.Brand className='logo'>PlayGround</Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle aria-controls='basic-navbar-nav' />
-        <Navbar.Collapse id='basic-navbar-nav' className='d-flex'>
-          <Nav className='ml-auto p-2'>
-            {userInfo && (
-              <Nav.Link href='/home'>Go to Dashboard {dashboardIcon}</Nav.Link>
-            )}
+        <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+        <Navbar.Collapse id='responsive-navbar-nav'>
+          <Nav className='ml-auto'>
             {userInfo ? (
-              <NavDropdown title={userInfo.name} id='username' className='mr-4'>
-                <LinkContainer to='/profile'>
-                  <NavDropdown.Item>Profile</NavDropdown.Item>
-                </LinkContainer>
-                <NavDropdown.Item onClick={logoutHandler}>
-                  Log out
-                </NavDropdown.Item>
-              </NavDropdown>
+              <div style={styles.navItems} align={{ lg: 'end' }}>
+                <NavDropdown
+                  title={userInfo.name}
+                  id='username'
+                  align={{ lg: 'end' }}
+                  style={{ marginRight: '5em' }}
+                  flip
+                >
+                  <NavDropdown.Item href='/home'>
+                    {dashboardIcon} Dashboard
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href='/profile'>Profile</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Log out
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </div>
             ) : (
-              <LinkContainer to='/login'>
-                <Nav.Link>
-                  <Button
-                    variant='warning'
-                    className='text-black'
-                    style={styles.btn}
-                  >
-                    Sign In
-                  </Button>
-                </Nav.Link>
-              </LinkContainer>
+              <Nav.Link href='/login'>
+                {' '}
+                <Button
+                  variant='warning'
+                  className='text-black'
+                  style={styles.btn}
+                >
+                  Sign In
+                </Button>
+              </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>
