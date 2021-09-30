@@ -1,4 +1,4 @@
-import { LinkContainer, Link } from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import React, { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faIndent } from '@fortawesome/free-solid-svg-icons'

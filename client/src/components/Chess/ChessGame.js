@@ -20,6 +20,7 @@ function ChessGame() {
 
   useEffect(() => {
     onDropFromStore(opponentMove)
+    // eslint-disable-next-line
   }, [opponentMove])
 
   let gameStateDataToSend = {

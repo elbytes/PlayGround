@@ -43,7 +43,7 @@ const FabricCanvasBoard = () => {
 
   useEffect(() => {
     addBackground(backDrop)
-  }, [backDrop])
+  }, [backDrop, addBackground])
   useEffect(() => {
     if (canvas) {
       canvas.on('object:modified', function (options) {
