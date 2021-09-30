@@ -34,9 +34,15 @@ const defaultConstrains = { video: true, audio: true }
 
 const configuration = {
   iceServers: [
+    //STUN server urls
     {
-      urls: 'stun:stun.l.google.com:13902',
+      urls: [
+        'stun:stun.voipstunt.com',
+        'stun:stun.voipbuster.com',
+        'stun:stun.ideasip.com',
+      ],
     },
+    //TURN server urls
   ],
 }
 let connectedUserSocketId
@@ -44,7 +50,6 @@ let peerConnection
 let dataChannel
 
 export const getLocalStream = () => {
-  console.log('getting this')
   navigator.mediaDevices
     .getUserMedia(defaultConstrains)
     .then((stream) => {
