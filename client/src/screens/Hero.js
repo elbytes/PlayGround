@@ -1,8 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Row, Col, Button, Container, Image, Alert } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-// import heroOne from '../images/hero_1.png'
 import heroTwo from '../images/hero_2.png'
+
 const styles = {
   border: { border: '1px solid' },
   heroImage: { maxWidth: '100%', height: 'auto', display: 'flex' },
@@ -48,7 +49,11 @@ const styles = {
     textDecoration: 'none',
   },
 }
+
 function Hero() {
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   return (
     <div>
       <Container>
@@ -71,11 +76,13 @@ function Hero() {
                   Learn more
                 </Button>
               </Link>
-              <Link to='/register'>
-                <Button variant='warning' style={styles.heroBtnYellow}>
-                  Sign Up
-                </Button>
-              </Link>
+              {!userInfo && (
+                <Link to='/register'>
+                  <Button variant='warning' style={styles.heroBtnYellow}>
+                    Sign Up
+                  </Button>
+                </Link>
+              )}
             </div>
             <h3 style={styles.textTwo}>
               PlayGround is a web based video call application with integrated
