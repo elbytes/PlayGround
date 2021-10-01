@@ -20,5 +20,4 @@ const BookIndex = () => {
   )
 }
 
-console.log(styles)
 export default BookIndex

@@ -46,7 +46,6 @@ const Header = () => {
                   id='username'
                   align={{ lg: 'end' }}
                   style={{ marginRight: '5em' }}
-                  flip
                 >
                   <NavDropdown.Item href='/home'>
                     {dashboardIcon} Dashboard

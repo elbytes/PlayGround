@@ -1,5 +1,4 @@
 import { Row, Col } from 'react-bootstrap'
-
 import { useDispatch } from 'react-redux'
 import { setActivity } from '../actions/callActions'
 import { FaPaintBrush, FaChessKnight, FaBook } from 'react-icons/fa'

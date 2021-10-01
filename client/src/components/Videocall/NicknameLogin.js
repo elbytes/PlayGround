@@ -41,14 +41,6 @@ const NicknameLogin = ({ saveUsername }) => {
               <Card.Title style={styles.font}>
                 Choose a nickname or log in with your username
               </Card.Title>
-              <Card.Text>
-                <Alert variant='danger'>
-                  <p>
-                    The name you choose here will be displayed to all online
-                    users on the application.
-                  </p>
-                </Alert>
-              </Card.Text>
 
               <NicknameInput username={username} setUsername={setUsername} />
 
@@ -70,9 +62,7 @@ const NicknameLogin = ({ saveUsername }) => {
         </Col>
         <Col style={styles.margin} lg={6} md={12} sm={12}>
           <Alert variant='danger'>
-            <p>
-              Make sure the person you want to conenct with knows the nickname .
-            </p>
+            Make sure the person you want to conenct with knows the nickname .
           </Alert>
           <Alert variant='warning'>
             Choosing a nickname instead of using the name you chose upon signing
@@ -81,7 +71,9 @@ const NicknameLogin = ({ saveUsername }) => {
           </Alert>
           <Alert variant='info'>
             Read more about kids safety on the internet{' '}
-            <Alert.Link href='#'>here</Alert.Link>
+            <Alert.Link href='https://www.consumer.ftc.gov/topics/protecting-kids-online'>
+              here
+            </Alert.Link>
           </Alert>
         </Col>
       </Row>
