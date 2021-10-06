@@ -12,6 +12,7 @@ import RegisterScreen from './screens/RegisterScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import VideoCallDashboard from './components/Videocall/VideoCallDashboard'
 import NotFound from './screens/NotFound'
+
 const App = () => {
   return (
     <Router>

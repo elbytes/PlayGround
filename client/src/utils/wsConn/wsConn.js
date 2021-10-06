@@ -3,10 +3,11 @@ import { fabric } from 'fabric'
 import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
+import * as canvasActions from '../../actions/canvasActions'
 
 // const SERVER = 'http://playgroundonline.netlify.app/'
-const SERVER = 'https://playgroundonline.herokuapp.com/'
-// const SERVER = 'http://localhost:5000'
+// const SERVER = 'https://playgroundonline.herokuapp.com/'
+const SERVER = 'http://localhost:5000'
 
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
@@ -18,8 +19,8 @@ export const connectWithWebSocket = () => {
   socket = socketClient(SERVER)
 
   socket.on('connection', () => {
-    console.log('Successfully connected wit web socket server ')
-    console.log(socket.id)
+    console.log('Successfully connected with web socket server ')
+    console.log('mySocket:', socket.id)
     mySocketId = socket.id
   })
 
@@ -80,6 +81,7 @@ export const connectWithWebSocket = () => {
     console.log('receiving draw data back from server', data)
     webRTCHandler.handleReceivedDrawData(data)
   })
+
   //listener for adding a new shape to canvas
   // socket.on('new-add', (data) => {
   //   //TODO
@@ -177,13 +179,18 @@ export const sendGameState = (gameState) => {
   console.log('emitting game state change')
 }
 
-//canvas emit events to server
 export const sendDraw = (drawData) => {
   socket.emit('draw', drawData)
   console.log('emitting draw event to server with drawData payload')
   console.log(drawData)
 }
+
 //shape add event for canvas
+export const handleBackDrop = (data) => {
+  store.dispatch(canvasActions.setBackDrop(data))
+  console.log('dispatching backDrop to store')
+}
+
 export const emitAdd = (obj) => {
   console.log('emitting add shape event to server')
   socket.emit('object-added', obj)
@@ -246,7 +253,7 @@ export const eraseBoard = (canvas) => {
   })
 }
 
-export const setBackDrop = (data) => {
+export const emitSetBackDrop = (data) => {
   socket.emit('backdrop', data)
   console.log('sending backdrop set to server')
 }

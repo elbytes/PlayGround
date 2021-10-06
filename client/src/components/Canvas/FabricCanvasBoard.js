@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect, useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import { fabric } from 'fabric'
 import { v1 as uuid } from 'uuid'
-import {
-  emitAdd,
-  emitModify,
-  addObj,
-  modifyObj,
-  setBackDrop,
-} from '../../utils/wsConn/wsConn'
 import { connectedUserSocketId } from '../../utils/webRTC/webRTCHandler'
 import { backDropUrls } from './backdropUrls'
 import BackDrop from './BackDrop'
+import { setBackDrop } from '../../actions/canvasActions'
+import { emitSetBackDrop } from '../../utils/wsConn/wsConn'
 
 const styles = {
   btn: { border: 'none', margin: '0.5rem' },
@@ -25,9 +20,11 @@ const styles = {
   backDropDiv: { width: '120px', float: 'left' },
 }
 const FabricCanvasBoard = () => {
+  const dispatch = useDispatch()
   const [canvas, setCanvas] = useState('')
   const color = useSelector((state) => state.canvas.color)
   const [pickerVisible, setPickerVisible] = useState(false)
+  const backdrop = useSelector((state) => state.canvas.backdrop)
 
   const initCanvas = () =>
     new fabric.Canvas('canv', {
@@ -36,6 +33,16 @@ const FabricCanvasBoard = () => {
       backgroundColor: 'white',
       border: '1px solid',
     })
+
+  const addBackground = useCallback(
+    (url) => {
+      fabric.Image.fromURL(url, (img) => {
+        canvas.backgroundImage = img
+        canvas.renderAll()
+      })
+    },
+    [canvas]
+  )
 
   useEffect(() => {
     setCanvas(initCanvas())
@@ -53,7 +60,6 @@ const FabricCanvasBoard = () => {
             socket: connectedUserSocketId,
             drawData: modifiedObj,
           }
-          emitModify(drawDataToSend)
         }
       })
 
@@ -67,14 +73,14 @@ const FabricCanvasBoard = () => {
             socket: connectedUserSocketId,
             drawData: modifiedObj,
           }
-          emitModify(drawDataToSend)
         }
       })
-
-      modifyObj(canvas)
-      addObj(canvas)
     }
   }, [canvas])
+
+  useEffect(() => {
+    addBackground(`/img/backdrops/000${backdrop}.jpg`)
+  }, [backdrop, addBackground])
 
   const addShape = (e) => {
     let type = e.target.name
@@ -107,14 +113,6 @@ const FabricCanvasBoard = () => {
       object: { obj: object, id: object.id },
       socket: connectedUserSocketId,
     }
-    emitAdd(drawDataToSend)
-  }
-
-  const addBackground = (url) => {
-    fabric.Image.fromURL(url, (img) => {
-      canvas.backgroundImage = img
-      canvas.renderAll()
-    })
   }
 
   const addImage = () => {
@@ -129,15 +127,16 @@ const FabricCanvasBoard = () => {
 
   const onBackDropSelect = (e) => {
     let backDropId = e.target.id
-    // setSelectedBackDrop(backDropId)
+    togglePicker()
     addBackground(`/img/backdrops/000${backDropId}.jpg`)
-
+    //send to store
+    dispatch(setBackDrop(backDropId))
     //send to server
     let backDropDataToSend = {
       socket: connectedUserSocketId,
       backdrop: backDropId,
     }
-    setBackDrop(backDropDataToSend)
+    emitSetBackDrop(backDropDataToSend)
   }
 
   return (
@@ -150,7 +149,11 @@ const FabricCanvasBoard = () => {
           <div style={{ margin: '20px' }}>
             <p>Choose a backdrop</p>
             {backDropUrls.map((backdrop) => (
-              <div onClick={onBackDropSelect} style={styles.backDropDiv}>
+              <div
+                onClick={onBackDropSelect}
+                style={styles.backDropDiv}
+                key={backdrop.id}
+              >
                 <BackDrop src={backdrop.src} id={backdrop.id} />
               </div>
             ))}

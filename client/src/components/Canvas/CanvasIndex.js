@@ -1,5 +1,6 @@
 import React from 'react'
 import ColorPicker from './ColorPicker'
+import { Row, Col } from 'react-bootstrap'
 import FabricCanvasBoard from './FabricCanvasBoard'
 
 export const CanvasIndex = () => {
@@ -9,8 +10,17 @@ export const CanvasIndex = () => {
 
   return (
     <div>
-      <ColorPicker onColorPicked={onColorPicked} />
-      <FabricCanvasBoard onColorPicked={onColorPicked} />
+      <Row>
+        <Col>
+          <ColorPicker onColorPicked={onColorPicked} />
+        </Col>
+        <Col></Col>
+      </Row>
+      <Row>
+        <Col>
+          <FabricCanvasBoard />
+        </Col>
+      </Row>
     </div>
   )
 }
