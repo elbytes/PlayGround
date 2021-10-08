@@ -5,8 +5,8 @@ import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
 
 // const SERVER = 'http://playgroundonline.netlify.app/'
-// const SERVER = 'https://playgroundonline.herokuapp.com/'
-const SERVER = 'http://localhost:5001'
+const SERVER = 'https://playgroundonline.herokuapp.com/'
+// const SERVER = 'http://localhost:5001'
 
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
