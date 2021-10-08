@@ -1,7 +1,8 @@
 import React from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { FiTerminal } from 'react-icons/fi'
+import heart from '../images/heart.png'
 const styles = {
   links: {
     textDecoration: 'none',
@@ -66,6 +67,10 @@ const Footer = () => {
               <FiTerminal size='1.5rem' />
               <>DO LOGIC</>
             </a>
+          </Col>
+          <Col>
+            <Image src={heart} />
+            <span className='mx-4'>minority owned</span>
           </Col>
         </Row>
       </Container>
