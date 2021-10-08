@@ -3,7 +3,9 @@ import { Button } from 'react-bootstrap'
 
 const styles = {
   btn: {
-    marginLeft: '1rem',
+    margin: '1rem',
+    marginBottom: '1rem',
+    marginTop: '1rem',
   },
   btnContainer: {
     alignItems: 'center',
@@ -18,7 +20,10 @@ const NicknameSubmitBtn = ({
   return (
     <div style={styles.btnContainer}>
       <Button
-        className={styles.btn}
+        sm={12}
+        md
+        lg={6}
+        style={styles.btn}
         type='submit'
         variant='success'
         onClick={handleNicknameSubmitBtn}
@@ -26,6 +31,9 @@ const NicknameSubmitBtn = ({
         Set Nickname
       </Button>
       <Button
+        sm={12}
+        md
+        lg={6}
         style={styles.btn}
         type='submit'
         variant='danger'

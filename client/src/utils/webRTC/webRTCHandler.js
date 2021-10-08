@@ -16,7 +16,7 @@ import {
   setPrevClickedBook,
   setNextClickedBook,
 } from '../../actions/bookActions'
-import { setBackDrop } from '../../actions/canvasActions'
+import { setBackDrop, setImage } from '../../actions/canvasActions'
 import { callStates } from '../../constants/callConstants'
 import {
   setCallingDialogueVisibile,
@@ -287,6 +287,10 @@ export const handleReceivedDrawData = (drawData) => {
 export const handleBackDrop = (data) => {
   store.dispatch(setBackDrop(data))
   console.log('dispatching backDrop to store')
+}
+export const handleImageAdd = (data) => {
+  store.dispatch(setImage(data))
+  console.log('dispatching image add to store')
 }
 
 //function for book selected

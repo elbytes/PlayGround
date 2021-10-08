@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CirclePicker, CustomPicker } from 'react-color'
-import { Button } from 'react-bootstrap'
+import { Image } from 'react-bootstrap'
 import { setColor } from '../../actions/canvasActions'
-
+import palette from '../../images/color-palette.png'
 const ColorPicker = (props) => {
   const [pickerVisible, setPickerVisible] = useState(false)
   const [pickedColor, setPickedColor] = useState('#eb7134')
@@ -20,6 +20,11 @@ const ColorPicker = (props) => {
       backgroundColor: pickedColor,
       border: 'none',
       alignItems: 'center',
+      width: '60px',
+      padding: '0.3rem',
+      borderRadius: '0.4rem',
+      marginTop: '0',
+      cursor: 'pointer',
     },
   }
 
@@ -34,10 +39,9 @@ const ColorPicker = (props) => {
 
   return (
     <div>
-      <br />
-      <Button onClick={togglePicker} style={styles.colorPickerBtn}>
-        Colors
-      </Button>
+      <div onClick={togglePicker} style={styles.colorPickerBtn}>
+        <Image src={palette} />
+      </div>
       {pickerVisible && (
         <div
           style={{

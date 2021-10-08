@@ -3,11 +3,10 @@ import { fabric } from 'fabric'
 import * as webRTCHandler from '../webRTC/webRTCHandler'
 import store from '../../store'
 import * as dashboardActions from '../../actions/dashboardActions'
-import * as canvasActions from '../../actions/canvasActions'
 
 // const SERVER = 'http://playgroundonline.netlify.app/'
 // const SERVER = 'https://playgroundonline.herokuapp.com/'
-const SERVER = 'http://localhost:5000'
+const SERVER = 'http://localhost:5001'
 
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
@@ -65,6 +64,7 @@ export const connectWithWebSocket = () => {
     webRTCHandler.handleActivitySelected(data)
   })
 
+  ///CHESS
   //listeners for chess
   socket.on('move', (data) => {
     console.log('received data back from server', data)
@@ -76,16 +76,19 @@ export const connectWithWebSocket = () => {
     webRTCHandler.handleGameStateChange(data)
   })
 
+  ///CANVAS
   //listerner for canvas drawing
   socket.on('draw', (data) => {
     console.log('receiving draw data back from server', data)
     webRTCHandler.handleReceivedDrawData(data)
   })
 
-  //listener for adding a new shape to canvas
-  // socket.on('new-add', (data) => {
-  //   //TODO
-  // })
+  //listener for adding a new image to canvas
+  socket.on('image-add', (data) => {
+    console.log('receiving image add data back from server', data)
+    let { imageId } = data
+    webRTCHandler.handleImageAdd(imageId)
+  })
 
   //listener for setting a new backdrop
   socket.on('backdrop', (data) => {
@@ -168,6 +171,7 @@ export const sendActivity = (data) => {
   console.log('emitting activity event to server')
 }
 
+///CHESS
 //emitting events to server for chessboard
 export const sendMove = (move) => {
   socket.emit('move', move)
@@ -179,16 +183,17 @@ export const sendGameState = (gameState) => {
   console.log('emitting game state change')
 }
 
+////CANVAS
 export const sendDraw = (drawData) => {
   socket.emit('draw', drawData)
   console.log('emitting draw event to server with drawData payload')
   console.log(drawData)
 }
 
-//shape add event for canvas
-export const handleBackDrop = (data) => {
-  store.dispatch(canvasActions.setBackDrop(data))
-  console.log('dispatching backDrop to store')
+export const emitImageAdd = (imageData) => {
+  socket.emit('image-add', imageData)
+  console.log('emitting add new image event to server with imageData payload')
+  console.log(imageData)
 }
 
 export const emitAdd = (obj) => {
@@ -244,20 +249,16 @@ export const modifyObj = (canvas) => {
   })
 }
 
-//erasing canvas board on listener for erase
-export const eraseBoard = (canvas) => {
-  console.log('erase board running before on')
-  socket.on('erase', () => {
-    console.log('erase board running after on')
-    canvas.clear()
-  })
-}
-
 export const emitSetBackDrop = (data) => {
   socket.emit('backdrop', data)
   console.log('sending backdrop set to server')
 }
 
+export const emitEraseBoard = (data) => {
+  socket.emit('erase', data)
+}
+
+////BOOKS
 //book emit events
 export const emitBookSelection = (data) => {
   socket.emit('book-select', data)

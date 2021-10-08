@@ -159,6 +159,11 @@ io.on('connection', (socket) => {
     io.to(data.socket).emit('backdrop', data.backdrop)
   })
 
+  socket.on('image-add', (data) => {
+    console.log('received image add event on server')
+    io.to(data.socket).emit('image-add', data)
+  })
+
   //listeners for chess
   socket.on('move', (data) => {
     io.to(data.socket).emit('move', data.move)

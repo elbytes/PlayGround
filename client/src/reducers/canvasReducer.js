@@ -2,6 +2,7 @@ import {
   CANVAS_SET_DRAW,
   CANVAS_SET_COLOR,
   CANVAS_SET_BACKDROP,
+  CANVAS_SET_IMAGE,
 } from '../constants/canvasConstants'
 
 const initState = {
@@ -22,6 +23,9 @@ export const canvasReducer = (state = initState, action) => {
       }
     case CANVAS_SET_BACKDROP:
       return { ...state, backdrop: action.backdrop }
+
+    case CANVAS_SET_IMAGE:
+      return { ...state, imageId: action.imageId }
 
     default:
       return state
