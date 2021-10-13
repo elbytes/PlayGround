@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import LocalVideoView from './LocalVideoView'
@@ -21,6 +21,14 @@ const styles = {
     marginTop: '0.5rem',
     marginBottom: '0.5rem',
   },
+  local: {
+    position: 'absolute',
+    width: '40%',
+    height: '40%',
+    top: '0',
+    right: '0',
+  },
+  remote: { width: '100%', height: '100%', position: 'relative' },
 }
 const DirectCall = (props) => {
   const {
@@ -34,17 +42,18 @@ const DirectCall = (props) => {
     message,
     setDirectCallMessage,
   } = props
+
   return (
     <>
       <Row></Row>
       <Row style={styles.verticalMArgin}>
-        <Col>
-          <LocalVideoView localStream={localStream} />
-        </Col>
-        <Col>
+        <Col style={styles.remote}>
           {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
             <RemoteVideoView remoteStream={remoteStream} />
           )}
+        </Col>
+        <Col style={styles.local}>
+          <LocalVideoView localStream={localStream} />
         </Col>
       </Row>
       <Row style={styles.verticalMArgin}>

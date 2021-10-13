@@ -7,6 +7,8 @@ import LandingScreen from './screens/LandingScreen'
 import HomeScreen from './screens/HomeScreen'
 import About from './screens/About'
 import Legal from './screens/Legal'
+import FaqScreen from './screens/FaqScreen'
+import SupportScreen from './screens/SupportScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import ProfileScreen from './screens/ProfileScreen'
@@ -24,6 +26,8 @@ const App = () => {
             <Route path='/home' component={HomeScreen} />
             <Route path='/about' component={About} />
             <Route path='/legal' component={Legal} />
+            <Route path='/faq' component={FaqScreen} />
+            <Route path='/support' component={SupportScreen} />
             <Route path='/dashboard' component={VideoCallDashboard} exact />
             <Route path='/login' component={LoginScreen} />
             <Route path='/register' component={RegisterScreen} />

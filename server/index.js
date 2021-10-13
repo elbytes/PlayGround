@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import userRoutes from './routes/userRoutes.js'
+import newsletterRoute from './routes/newsletterRoute.js'
 import { errorHandler } from './middlewares/errorMiddleware.js'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/users', userRoutes)
+app.use('/api/newsletter', newsletterRoute)
 //app.use(notFound)
 app.use(errorHandler)
 
