@@ -18,6 +18,7 @@ import Chat from '../Chat/Chat'
 
 const styles = {
   verticalMArgin: {
+    position: 'relative',
     marginTop: '0.5rem',
     marginBottom: '0.5rem',
     marginLeft: '0.5rem',
@@ -25,11 +26,19 @@ const styles = {
   },
 
   local: {
-    position: 'absolute',
+    position: 'relative',
     width: '30%',
     height: '30%',
     top: '0',
     right: '2rem',
+    borderRadius: '2rem',
+  },
+  localInitial: {
+    position: 'relative',
+    width: '50%',
+    height: '50%',
+    top: '0',
+    right: '1rem',
     borderRadius: '2rem',
   },
   remote: { width: '100%', height: '100%', position: 'relative' },
@@ -48,7 +57,7 @@ const DirectCall = (props) => {
   } = props
 
   return (
-    <>
+    <div className='container-fluid'>
       <Row style={styles.verticalMArgin}>
         {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
           <Col style={styles.remote}>
@@ -58,13 +67,13 @@ const DirectCall = (props) => {
         {remoteStream &&
           localStream &&
           callState === callStates.CALL_IN_PROGRESS && (
-            <Col style={styles.local}>
+            <Col style={styles.local} className='fluid'>
               <LocalVideoView localStream={localStream} />
             </Col>
           )}
 
         {localStream && !remoteStream && (
-          <Col style={styles.localInitial}>
+          <Col style={styles.localInitial} className='fluid'>
             <LocalVideoView localStream={localStream} />
           </Col>
         )}
@@ -106,7 +115,7 @@ const DirectCall = (props) => {
           )}
         </Col>
       </Row>
-    </>
+    </div>
   )
 }
 

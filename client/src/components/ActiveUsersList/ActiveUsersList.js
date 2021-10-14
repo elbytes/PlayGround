@@ -6,6 +6,11 @@ import { connect } from 'react-redux'
 const ActiveUsersList = ({ activeUsers }) => {
   return (
     <div className='active_user_list_container'>
+      {activeUsers.length === 0 && (
+        <p style={{ fontSize: '1.2rem' }}>
+          Unfortunately no friends are available now
+        </p>
+      )}
       {activeUsers.map((activeUser) => (
         <ActiveUsersListItem
           key={activeUser.socketId}

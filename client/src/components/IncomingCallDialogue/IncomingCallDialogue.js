@@ -13,9 +13,10 @@ const IncomingCallDialogue = ({ callerUsername }) => {
   const handleRejectBtnClikced = () => {
     rejectIncomingCall()
   }
+
   return (
     <div>
-      <span>{callerUsername} is calling...</span>
+      <p style={{ fontSize: '1.5em' }}>{callerUsername} is calling...</p>
       <div>
         <Button
           variant='success'
