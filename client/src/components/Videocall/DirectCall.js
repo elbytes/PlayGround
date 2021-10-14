@@ -20,13 +20,17 @@ const styles = {
   verticalMArgin: {
     marginTop: '0.5rem',
     marginBottom: '0.5rem',
+    marginLeft: '0.5rem',
+    paddingBottom: '0.5rem',
   },
+
   local: {
     position: 'absolute',
-    width: '40%',
-    height: '40%',
+    width: '30%',
+    height: '30%',
     top: '0',
-    right: '0',
+    right: '2rem',
+    borderRadius: '2rem',
   },
   remote: { width: '100%', height: '100%', position: 'relative' },
 }
@@ -45,16 +49,25 @@ const DirectCall = (props) => {
 
   return (
     <>
-      <Row></Row>
       <Row style={styles.verticalMArgin}>
-        <Col style={styles.remote}>
-          {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
+        {remoteStream && callState === callStates.CALL_IN_PROGRESS && (
+          <Col style={styles.remote}>
             <RemoteVideoView remoteStream={remoteStream} />
+          </Col>
+        )}
+        {remoteStream &&
+          localStream &&
+          callState === callStates.CALL_IN_PROGRESS && (
+            <Col style={styles.local}>
+              <LocalVideoView localStream={localStream} />
+            </Col>
           )}
-        </Col>
-        <Col style={styles.local}>
-          <LocalVideoView localStream={localStream} />
-        </Col>
+
+        {localStream && !remoteStream && (
+          <Col style={styles.localInitial}>
+            <LocalVideoView localStream={localStream} />
+          </Col>
+        )}
       </Row>
       <Row style={styles.verticalMArgin}>
         <Col>
